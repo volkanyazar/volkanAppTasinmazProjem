@@ -1,0 +1,23 @@
+.not-found-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  h1 {
+    font-size: 120px;
+    color: #f44336; /* Kırmızı renk örneği */
+  }
+  
+  p {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #2196F3; /* Mavi renk örneği */
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  

@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-6 col-12 p-5 mx-auto custom-search">
+      <form>
+        <div class="input-group">
+          <input
+            class="form-control bg-secondary text-white mx-3"
+            type="search"
+            placeholder="Ara"
+            aria-label="Ara"
+            [(ngModel)]="searchText"
+            name="searchText"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline- btn-primary" (click)="search()" type="button">
+              <i class="fas fa-search"></i> Ara
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="!pagedUsers || pagedUsers.length === 0" class="no-data-message text-center">
+  Kullanıcılar bulunamadı.
+</div>
+
+<div *ngIf="pagedUsers && pagedUsers.length > 0" class="row">
+  <form class="col-md-10 col-lg-6 col-12 p-5 mx-auto">
+    <div class="table-responsive">
+      <table class="table table-bordered excel-style">
+        <thead>
+          <tr>
+            <th></th>
+            <th>AD</th>
+            <th>SOYAD</th>
+            <th>E-MAİL</th>
+            <th>ROL</th>
+            <th>ADRES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Belirli bir sayfa için verileri filtrele -->
+          <tr *ngFor="let user of pagedUsers | usersFilter: searchText">
+            <td>
+              <input type="hidden" [value]="user.userId" />
+              <input style="text-align: right;" type="checkbox" [value]="user.userId" (change)="onCheckboxClicked($event, user)" />
+            </td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.adres }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="d-flex justify-content-center">
+        <mat-paginator
+          [length]="users.length"
+          [pageSize]="itemsPerPage"
+          [pageSizeOptions]="[itemsPerPage]"
+          showFirstLastButtons="true"
+          (page)="changePage($event)"
+          class="pagination-icons"
+        ></mat-paginator>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="button-container text-center">
+  <button name="actionButtons" class="action-button add-button" routerLink="/kullanici-islemleri/user-add" (click)="navigateToAddUser()">
+    <i class="fas fa-plus"></i> Ekle
+  </button>
+  <button name="actionButtons" class="action-button delete-button" (click)="deleteSelectedUsers()" [disabled]="selectedUsers.length <= 0">
+    <i class="fas fa-trash"></i> Sil
+  </button>
+  <button name="actionButtons" class="action-button edit-button" routerLink="/kullanici-islemleri/user-update" (click)="navigateToUpdateUser()" [disabled]="selectedUsers.length <= 0">
+    <i class="fas fa-edit"></i> Güncelle
+  </button>
+  <button name="actionButtons" class="action-button report-button" (click)="generateReport()">
+    <i class="fas fa-file-excel"></i> Raporla
+  </button>
+</div>

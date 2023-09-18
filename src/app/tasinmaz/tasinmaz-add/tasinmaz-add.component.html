@@ -1,0 +1,171 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="custom-form">
+        <form [formGroup]="tasinmazForm" (ngSubmit)="addTasinmaz()">
+          <!-- İL Alanı -->
+          <div class="form-group">
+            <label for="il">İL</label>
+            <select class="form-control" id="il" formControlName="il" required (change)="onIlChange()">
+              <option value="">İL seçin</option>
+              <!-- İllerin dinamik olarak eklenmesi gerekiyor -->
+              <option *ngFor="let il of iller" [value]="il.ilId">{{ il.ilName }}</option>
+            </select>
+            <div
+              *ngIf="
+                tasinmazForm.get('il')?.hasError('required') &&
+                tasinmazForm.get('il')?.dirty
+              "
+              class="text-danger"
+            >
+              İL Alanı zorunludur...
+            </div>
+          </div>
+
+          <!-- İLÇE Alanı -->
+          <div class="form-group">
+            <label for="ilce">İLÇE</label>
+            <select class="form-control" id="ilce" formControlName="ilce" required (change)="onIlceChange()">
+              <option value="">İLÇE seçin</option>
+              <!-- İlçelerin dinamik olarak eklenmesi gerekiyor -->
+              <option *ngFor="let ilce of ilceler" [value]="ilce.ilceId">{{ ilce.ilceName }}</option>
+            </select>
+            <div
+              *ngIf="
+                tasinmazForm.get('ilce')?.hasError('required') &&
+                tasinmazForm.get('ilce')?.dirty
+              "
+              class="text-danger"
+            >
+              İLÇE Alanı zorunludur...
+            </div>
+          </div>
+
+          <!-- MAHALLE Alanı -->
+          <div class="form-group">
+            <label for="mahalleId">MAHALLE</label>
+            <select class="form-control" id="mahalleId" formControlName="mahalleId" required>
+              <option value="">MAHALLE seçin</option>
+              <!-- Mahallelerin dinamik olarak eklenmesi gerekiyor -->
+              <option *ngFor="let mahalle of mahalleler" [value]="mahalle.mahalleId">{{ mahalle.mahalleName }}</option>
+            </select>
+            <div
+              *ngIf="
+                tasinmazForm.get('mahalleId')?.hasError('required') &&
+                tasinmazForm.get('mahalleId')?.dirty
+              "
+              class="text-danger"
+            >
+              MAHALLE Alanı zorunludur...
+            </div>
+          </div>
+
+          <!-- ADA Alanı -->
+          <div class="form-group">
+            <label for="ada">ADA</label>
+            <input
+              type="text"
+              class="form-control"
+              id="ada"
+              formControlName="ada"
+              placeholder="ADA"
+              required
+            />
+            <div
+              *ngIf="
+                tasinmazForm.get('ada')?.hasError('required') &&
+                tasinmazForm.get('ada')?.dirty
+              "
+              class="text-danger"
+            >
+              ADA zorunludur...
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="custom-form">
+        <form [formGroup]="tasinmazForm" (ngSubmit)="addTasinmaz()">
+          <!-- PARSEL Alanı -->
+          <div class="form-group">
+            <label for="parsel">PARSEL</label>
+            <input
+              type="text"
+              class="form-control"
+              id="parsel"
+              formControlName="parsel"
+              placeholder="PARSEL"
+              required
+            />
+            <div
+              *ngIf="
+                tasinmazForm.get('parsel')?.hasError('required') &&
+                tasinmazForm.get('parsel')?.dirty
+              "
+              class="text-danger"
+            >
+              PARSEL zorunludur...
+            </div>
+          </div>
+
+          <!-- NİTELİK Alanı -->
+          <div class="form-group">
+            <label for="nitelik">NİTELİK</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nitelik"
+              formControlName="nitelik"
+              placeholder="NİTELİK"
+              required
+            />
+            <div
+              *ngIf="
+                tasinmazForm.get('nitelik')?.hasError('required') &&
+                tasinmazForm.get('nitelik')?.dirty
+              "
+              class="text-danger"
+            >
+              NİTELİK zorunludur...
+            </div>
+          </div>
+
+          <!-- ADRES Alanı -->
+          <div class="form-group">
+            <label for="adres">ADRES</label>
+            <textarea
+              class="form-control"
+              id="adres"
+              formControlName="adres"
+              placeholder="ADRES"
+              rows="4"
+              required
+            ></textarea>
+            <div
+              *ngIf="
+                tasinmazForm.get('adres')?.hasError('required') &&
+                tasinmazForm.get('adres')?.dirty
+              "
+              class="text-danger"
+            >
+              ADRES ALANI zorunludur...
+            </div>
+          </div>
+
+          <!-- Gönder Butonu -->
+          <div class="form-group text-center">
+            <button
+              type="submit"
+              class="btn btn-primary btn-icon"
+              [disabled]="tasinmazForm.invalid"
+            >
+              <i class="fas fa-plus-circle"></i> Ekle
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

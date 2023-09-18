@@ -1,0 +1,49 @@
+<div *ngIf="!isAuthenticated" class="vh-100 d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto">
+        <div id="loginFrame" class="position-relative">
+          <div id="login" class="levelUp shadow bg-white card p-4">
+            <div class="container">
+              <h2 class="mb-4 text-center">Taşınmaz Yönetim Girişi</h2>
+              <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-3 my-3">
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" formControlName="email" class="mt-2 form-control" required>
+                  <div *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').dirty" class="text-danger">
+                    Email alanı boş bırakılamaz.
+                  </div>
+                  <div *ngIf="loginForm.get('email').hasError('email') && loginForm.get('email').dirty" class="text-danger">
+                    Geçerli bir email adresi girin.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Parola</label>
+                  <input type="password" formControlName="password" class="mt-2 form-control" required>
+                  <div *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').dirty" class="text-danger">
+                    Parola alanı boş bırakılamaz.
+                  </div>
+                  <div *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').dirty" class="text-danger">
+                    Parola en az 8 karakter uzunluğunda olmalıdır.
+                  </div>
+                </div>
+                <!-- <div class="mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" formControlName="rememberMe" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">Beni Hatırla</label>
+                  </div>
+                </div> -->
+                <div class="mb-3">
+                  <button class="btn btn-lg btn-success w-100" type="submit">Giriş Yap</button>
+                </div>
+                <div class="text-center">
+                  <a href="#" class="text-muted">Parolanızı mı unuttunuz?</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+/* paginator-styling.css */
+::ng-deep .mat-paginator {
+    font-size: 18px; /* Özelleştireceğiniz boyutu burada ayarlayabilirsiniz */
+    padding: 16px; /* İsteğe bağlı olarak padding ekleyebilirsiniz */
+    background-color: #fff; /* İsteğe bağlı olarak arkaplan rengini ayarlayabilirsiniz */
+  }
+  
+  ::ng-deep .mat-paginator-range-label,
+  ::ng-deep .mat-select-value,
+  ::ng-deep .mat-paginator-page-size,
+  ::ng-deep .mat-paginator-page-size-label,
+  ::ng-deep .mat-paginator-navigation,
+  ::ng-deep .mat-paginator-page-number,
+  ::ng-deep .mat-paginator-page-size-select {
+    font-size: 18px; /* Paginatorun içindeki metinlerin boyutunu özelleştirebilirsiniz */
+  }
+  

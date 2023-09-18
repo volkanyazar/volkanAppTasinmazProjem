@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-lg-6 col-12 p-5 mx-auto custom-search">
+      <form>
+        <div class="input-group">
+          <input
+            class="form-control bg-secondary text-white mx-3"
+            type="search"
+            placeholder="Ara"
+            aria-label="Ara"
+            [(ngModel)]="searchText"
+            name="searchText"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline- btn-primary" (click)="search()" type="button">
+              <i class="fas fa-search"></i> Ara
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!pagedTasinmazlar || pagedTasinmazlar.length === 0" class="no-data-message">
+  Taşınmaz bulunamadı.
+</div>
+
+<div *ngIf="pagedTasinmazlar && pagedTasinmazlar.length > 0" class="row">
+  <form class="col-md-10 col-lg-6 col-12 p-5 mx-auto">
+    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+      <table class="table table-bordered excel-style">
+        <thead>
+          <tr>
+            <th></th>
+            <th>İL</th>
+            <th>İLÇE</th>
+            <th>MAHALLE</th>
+            <th>ADA</th>
+            <th>PARSEL</th>
+            <th>NİTELİK</th>
+            <th>ADRES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Belirli bir sayfa için verileri filtrele -->
+          <tr *ngFor="let tasinmaz of pagedTasinmazlar | tasinmazFilter: searchText">
+            <td>
+              <input type="hidden" [value]="tasinmaz.tasinmazId" />
+              <input style="text-align: right;" type="checkbox" [value]="tasinmaz.tasinmazId" (change)="onCheckboxClicked($event, tasinmaz)" />
+            </td>
+            <td>{{ getIlName(tasinmaz.il) }}</td>
+            <td>{{ getIlceName(tasinmaz.ilce) }}</td>
+            <td>{{ getMahalleName(tasinmaz.mahalleId) }}</td>
+            <td>{{ tasinmaz.ada }}</td>
+            <td>{{ tasinmaz.parsel }}</td>
+            <td>{{ tasinmaz.nitelik }}</td>
+            <td>{{ tasinmaz.adres }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        <mat-paginator
+          [length]="tasinmazlar.length"
+          [pageSize]="itemsPerPage"
+          [pageSizeOptions]="[itemsPerPage]"
+          showFirstLastButtons="true"
+          (page)="changePage($event)"
+          class="pagination-icons"
+        ></mat-paginator>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="button-container text-center mt-4">
+  <button name="actionButtons" class="action-button add-button" routerLink="/tasinmaz/tasinmaz-add">
+    <i class="fas fa-plus"></i> Ekle
+  </button>
+  <button name="actionButtons" class="action-button delete-button" (click)="deleteSelectedTasinmaz()" [disabled]="selectedTasinmazlar.length <= 0">
+    <i class="fas fa-trash"></i> Sil
+  </button>
+  <button name="actionButtons" class="action-button edit-button" routerLink="/tasinmaz/tasinmaz-update" (click)="navigateToUpdateTasinmaz()" [disabled]="selectedTasinmazlar.length <= 0">
+    <i class="fas fa-edit"></i> Güncelle
+  </button>
+  <button name="actionButtons" class="action-button report-button" (click)="generateReport()">
+    <i class="fas fa-file-excel"></i> Raporla
+  </button>
+</div>

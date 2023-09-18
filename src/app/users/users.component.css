@@ -1,0 +1,114 @@
+/* Stil dosyası örnek */
+
+/* Arama alanı stilini özelleştirme */
+.custom-search {
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+ /* Tablo stilleri */
+.table {
+    background-color: #f5f5f5; /* Tablo arka plan rengi */
+    border: 1px solid #ddd; /* Tablo kenarlığı */
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Tablo başlık stilleri */
+  .table thead {
+    background-color: #007bff; /* Başlık arka plan rengi */
+    color: #fff; /* Başlık metin rengi */
+  }
+  
+  /* Tablo başlık hücreleri */
+  .table th {
+    padding: 12px; /* Başlık içeriği için iç boşluk */
+    text-align: center; /* Başlık metni ortala */
+    background-color: darkslategray;
+    color: white;
+  }
+  
+  /* Tablo veri hücreleri */
+  .table td {
+    padding: 10px; /* Hücre içeriği için iç boşluk */
+    text-align: center; /* Hücre metni ortala */
+    border-top: 1px solid #ddd; /* Hücre üst kenarlığı */
+  }
+  
+  /* Zebra çizgili tablo (opsiyonel) */
+  .table tbody tr:nth-child(even) {
+    background-color: #e0e0e0; /* Zebra çizgili arka plan rengi */
+  }
+  
+  /* Hücre içeriği stilini özelleştirme (örnek olarak) */
+  .table td {
+    color: #333; /* Hücre metin rengi */
+    background-color: #f5f5f5; /* Hücre arka plan rengi */
+  }
+  
+  /* Seçili satır stilini özelleştirme (opsiyonel) */
+  .table tbody tr.selected {
+    background-color: #ffffcc; /* Seçili satırın arka plan rengi */
+  }
+  
+  
+  
+  /* "Sil" düğmesi stilini özelleştirme */
+  .action-button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .add-button {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .report-button {
+    background-color: #17a2b8;
+    color: #fff;
+  }
+  
+  .action-button:hover {
+    filter: brightness(1.2);
+  }
+  
+  /* Taşınmaz bulunamadı mesajı stilini özelleştirme */
+.no-data-message {
+    text-align: center; /* Metni ortala */
+    font-size: 18px; /* Metin boyutu */
+    margin-top: 20px; /* Üst boşluk */
+    padding: 10px; /* İç boşluk */
+    background-color: #fff; /* Arka plan rengi */
+    border: 1px solid #ddd; /* Kenarlık */
+    border-radius: 5px; /* Köşe yuvarlama */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Gölge efekti */
+  }
+  
+  :host {
+    background-color: #007bff; /* Arka plan rengi (örnek olarak mavi) */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }

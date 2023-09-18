@@ -1,0 +1,45 @@
+/* Error messages */
+.error-message {
+  color: #d9534f;
+  margin-top: 5px;
+}
+
+/* Form style */
+.custom-form {
+  background-color: gray;
+  color: wheat;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding: 30px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Input style */
+.colorful {
+  background-color: lightblue;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #333;
+}
+
+/* Button style */
+.btn-primary.colorful {
+  background-color: #007bff;
+  color: #fff;
+  border: solid;
+  border-width: 3px;
+  border-radius: 10px;
+  margin: 50px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary.colorful:hover {
+  background-color: #0056b3;
+}
+
+/* Butonun içindeki ikonun stili */
+.btn-primary i {
+  margin-right: 5px; /* İkon ile metin arasındaki boşluğu ayarlar */
+}

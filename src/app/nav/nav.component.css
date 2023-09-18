@@ -1,0 +1,26 @@
+/* Navbar stil */
+.navbar {
+    background-color: #343a40; /* Navbar arkaplan rengi */
+    border-bottom: 4px solid #007bff; /* Alt çizgi rengi */
+  }
+  
+  /* Navbar linkleri için stil */
+  .navbar-nav .nav-link {
+    color: #fff; /* Metin rengi */
+    font-weight: bold; /* Kalın metin */
+    padding: 15px 20px; /* Link içeriği ile sağ ve sol boşluklar */
+    transition: background-color 0.3s, color 0.3s; /* Renk değişimi animasyonu */
+  }
+  
+  /* Navbar linkleri üzerine gelindiğinde stil */
+  .navbar-nav .nav-link:hover {
+    background-color: #007bff; /* Link üzerine gelindiğinde arkaplan rengi */
+    color: #fff; /* Link üzerine gelindiğinde metin rengi */
+  }
+  
+  /* Aktif navbar linki için stil */
+  .navbar-nav .nav-item.active .nav-link {
+    background-color: #007bff; /* Aktif linkin arkaplan rengi */
+    color: #fff; /* Aktif linkin metin rengi */
+  }
+  

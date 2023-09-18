@@ -1,0 +1,34 @@
+.form-control {
+    height:48px;
+  }
+  #loginFrame {
+    max-width : 420px;
+    width:100%;
+    margin:0 auto;
+  }
+  #login {
+    cursor:pointer;
+  }
+  .levelUp {z-index : 9;transform : translateX(32px) translateY(32px);transition:all 300ms linear;}
+  .levelDown {z-index : 8;transform : translateX(-32px) translateY(-32px);transition:all 300ms linear;}
+   
+  #signup {
+    width:100%;
+    position:absolute;
+  }
+   
+  .levelDown:after {
+    position:absolute;
+    content:" ";
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background : rgba(0,0,0,0.7);
+    border-radius:4px;
+  }
+   
+  .levelDown:hover:after{
+    cursor:pointer;
+    background : rgba(0,0,0,0.1);
+  }

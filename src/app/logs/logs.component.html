@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div *ngIf="!pagedLogs || pagedLogs.length === 0" class="row">
+    <div class="col text-center">
+      <div class="no-data-message">
+        Log Kayıtları Bulunamadı.
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="pagedLogs && pagedLogs.length > 0" class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 col-12">
+      <form>
+        <div class="table-responsive">
+          <table class="table table-bordered excel-style">
+            <thead>
+              <tr>
+                <th>Durum</th>
+                <th>Kullanıcı ID</th>
+                <th>İşlem Tipi</th>
+                <th>Tarih/Saat</th>
+                <th>IP</th> 
+                <th>Açıklama</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let log of pagedLogs">
+                <td>{{ setUserStatus(log.durum)}}</td>
+                <td>{{ log.userid }}</td>
+                <td>{{ log.islemtipi }}</td>
+                <td>{{ log.tarih }}</td>
+                <td>{{ log.logip }}</td>
+                <td>{{ log.aciklama }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <mat-paginator
+              [length]="logs.length"
+              [pageSize]="itemsPerPage"
+              [pageSizeOptions]="[itemsPerPage]"
+              showFirstLastButtons="true"
+              (page)="changePage($event)"
+              class="pagination-icons"
+            ></mat-paginator>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="row justify-content-between mt-3">
+    <div class="col-6"></div>
+    <div class="col-6">
+      <button name="actionButtons" class="btn btn-primary report-button float-right" routerLink="/log-islemleri/logdetails" routerLinkActive="router-link-active" >
+        <i class="fas fa-info-circle"></i> Log Detayları
+      </button>
+    </div>
+  </div>
+</div>

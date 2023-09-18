@@ -1,0 +1,142 @@
+
+/* Alertify İletişim Kutusu Ana Container */
+.alertify {
+  font-family: Arial, sans-serif;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Alertify Confirm Container */
+.ajs-content {
+  background-color: #007bff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 250px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Başlık */
+.alertify .ajs-header {
+  background-color: #dc3545;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* Alertify Confirm Container */
+.ajs-modal {
+  background-color: rgba(0, 0, 0, 0.5); /* Arkaplan rengi */
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Alertify Confirm İletişim Kutusu */
+.ajs-dialog {
+  background-color: darkslategrey;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+/* Alertify Confirm Header */
+.ajs-header {
+  background-color: #007bff;
+  color: darkgrey;
+  font-weight: bold;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Alertify Confirm Message Text */
+.ajs-message {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Alertify Confirm Buttons Container */
+.ajs-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Confirm Yes Button */
+.ajs-ok {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Confirm Yes Button Hover Effect */
+.ajs-ok:hover {
+  background-color: #218838;
+}
+
+/* Confirm No Button */
+.ajs-cancel {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Confirm No Button Hover Effect */
+.ajs-cancel:hover {
+  background-color: #c82333;
+}
+
+* Düğme Stilleri */
+.alertify .ajs-ok, .alertify .ajs-cancel {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Düğmelere Hover Efekti */
+.alertify .ajs-ok:hover, .alertify .ajs-cancel:hover {
+  background-color: gray;
+}
+
+/* Başarı Mesajı Rengi */
+.alertify.alertify-success .ajs-header {
+  background-color: #28a745;
+}
+
+/* Hata Mesajı Rengi */
+.alertify.alertify-error .ajs-header {
+  background-color: #b41122;
+}
+
+/* Uyarı Mesajı Rengi */
+.alertify.alertify-warning .ajs-header {
+  background-color: #c0961a;
+  border-radius: 5px;
+}
+
+/* Mesaj Mesajı Rengi */
+.alertify.alertify-message .ajs-header {
+  background-color: #0eb4ce;
+}

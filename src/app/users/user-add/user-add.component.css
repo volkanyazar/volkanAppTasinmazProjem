@@ -1,0 +1,58 @@
+/* Ana formun tasarımı */
+.custom-form {
+  background-color: lightslategray; /* Arka plan rengi */
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  margin: 30px;
+}
+
+/* Form gruplarının tasarımı */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Etiketlerin tasarımı */
+label {
+  font-weight: bold;
+  color: lavender; /* Mavi renk */
+}
+
+/* Form kontrolünün tasarımı */
+.form-control {
+  border: 1px solid #d9534f; /* Kenarlık rengi */
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Hata mesajının tasarımı */
+.error-message {
+  color: #d9534f; /* Kırmızı renk */
+  font-size: 14px;
+}
+
+/* Düğmelerin tasarımı */
+.btn-primary {
+  background-color: green;
+  color: white;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 10px 60px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Hover rengi */
+}
+
+/* Buton içindeki ikonun tasarımı */
+.btn-icon i {
+  margin-right: 5px; /* İkon ile metin arasındaki boşluğu ayarlar */
+}
+
+/* Büyük başlık */
+h2 {
+  color: lavenderblush; /* Mavi renk */
+}

@@ -1,0 +1,48 @@
+.custom-form {
+  background-color: #333;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.form-control {
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.text-danger {
+  color: #d9534f;
+}
+
+/* ... Diğer stiller ... */
+
+.btn-primary {
+  background-color: #007bff;
+  color: black;
+  border: none;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 10px 70px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Butonun içindeki ikonun stili */
+.btn-icon i {
+  margin-right: 5px; /* İkon ile metin arasındaki boşluğu ayarlar */
+}
+

@@ -1,0 +1,34 @@
+/* "X" çıkış düğmesi stilini özelleştirme */
+.iptal {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center; /* Düğme içeriğini dikey hizala */
+  justify-content: flex-start; /* Düğme içeriğini yatayda sola hizala */
+  cursor: pointer; /* Üzerine gelindiğinde imleci bir el işareti yap */
+  transition: background-color 0.3s ease; /* Arka plan rengi için yumuşak bir geçiş ekleyin */
+}
+
+.iptal:hover {
+  background-color: #c82333;
+}
+
+/* "Hoş Geldiniz" metni stilini düzenleme */
+#welcome-text {
+  color: #337ab7; /* Hoşgeldiniz yazısının rengini ayarlayabilirsiniz */
+  font-weight: bold; /* Yazının kalınlığını artırabilirsiniz */
+  text-align: right; /* Metni sağa yaslayın */
+}
+
+#welcome-text-container {
+  background-color: silver; /* Kutu arka plan rengi */
+  padding: 10px; /* Kutu içeriği ile kenarları arasındaki boşluk */
+  border-radius: 5px; /* Kutunun kenarlarının yuvarlaklığı */
+  display: inline-block; /* Kutunun içeriğe uygun boyutlanmasını sağlar */
+}

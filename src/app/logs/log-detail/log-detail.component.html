@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 col-12 p-5 custom-search">
+      <form>
+        <div class="input-group">
+          <input
+            class="form-control bg-secondary text-white mx-3"
+            type="search"
+            placeholder="Ara"
+            aria-label="Ara"
+            [(ngModel)]="searchText"
+            name="searchText"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" (click)="search()" type="button">
+              <i class="fas fa-search"></i> Ara
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div *ngIf="!pagedLogs || pagedLogs.length === 0" class="row">
+    <div class="col text-center">
+      <div class="no-data-message">
+        Log Kayıtları Bulunamadı.
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="pagedLogs && pagedLogs.length > 0" class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 col-12">
+      <form>
+        <div class="table-responsive">
+          <table class="table table-bordered excel-style">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Durum</th>
+                <th>Kullanıcı ID</th>
+                <th>İşlem Tipi</th>
+                <th>Tarih/Saat</th>
+                <th>IP</th> <!-- IP adresi -->
+                <th>Açıklama</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Belirli bir sayfa için verileri filtrele -->
+              <tr *ngFor="let log of pagedLogs | logdetailsFilter: searchText">
+                <td>
+                  <input type="hidden" [value]="log.logid" />
+                  <input style="text-align: right;" type="checkbox" [value]="log.logid" (change)="onCheckboxClicked($event, log)" />
+                </td>
+                <td>{{ setUserStatus(log.durum) }}</td>
+                <td>{{ log.userid }}</td>
+                <td>{{ log.islemtipi }}</td>
+                <td>{{ log.tarih }}</td>
+                <td>{{ log.logip }}</td>
+                <td>{{ log.aciklama }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-center">
+            <mat-paginator
+              [length]="logs.length"
+              [pageSize]="itemsPerPage"
+              [pageSizeOptions]="[itemsPerPage]"
+              showFirstLastButtons="true"
+              (page)="changePage($event)"
+              class="pagination-icons"
+            ></mat-paginator>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="row justify-content-between mt-3">
+    <div class="col-6"></div>
+    <div class="col-6">
+      <button name="actionButtons" class="btn btn-primary report-button float-right" (click)="printLogs()">
+        <i class="fas fa-print"></i> Yazdır
+      </button>
+    </div>
+    <div #printSection  class="col-6">
+    </div>
+  </div>
+</div>

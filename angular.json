@@ -19,13 +19,23 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/faviconpng.png",
+              "src/assets",
+              "src/tasinmaz-rapor"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/styles/paginator-styling.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/alertifyjs/build/css/alertify.min.css",
+              "node_modules/alertifyjs/build/css/themes/bootstrap.min.css",
+              "src/styles/alertify-custom.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/hammerjs/hammer.js",
+              "node_modules/alertifyjs/build/alertify.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-6 col-12 p-5 custom-form">
+      <form [formGroup]="userForm" (ngSubmit)="updateUser()">
+        <h2 class="mb-4 text-center">Kullanıcı Bilgilerini Güncelle</h2>
+        <!-- Ad Alanı -->
+        <div class="form-group">
+          <label for="firstName">Ad:</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Ad">
+          <div *ngIf="userForm.get('firstName')?.hasError('required') && userForm.get('firstName')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Ad Alanı zorunludur...
+          </div>
+        </div>
+        <!-- Soyad Alanı -->
+        <div class="form-group">
+          <label for="lastName">Soyad:</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Soyad">
+          <div *ngIf="userForm.get('lastName')?.hasError('required') && userForm.get('lastName')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Soyad Alanı zorunludur...
+          </div>
+        </div>
+        <!-- E-mail Alanı -->
+        <div class="form-group">
+          <label for="email">E-mail:</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="E-mail">
+          <div *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> E-mail Alanı zorunludur...
+          </div>
+        </div>
+        <!-- Parola Alanı -->
+        <div class="form-group">
+          <label for="newPassword">Parola:</label>
+          <input type="password" class="form-control" id="newPassword" formControlName="newPassword" placeholder="Parola">
+          <div *ngIf="userForm.get('newPassword')?.hasError('required') && userForm.get('newPassword')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Parola Alanı zorunludur...
+          </div>
+        </div>
+        <!-- Rol Alanı -->
+        <div class="form-group">
+          <label for="role">Rol:</label>
+          <select class="form-control" id="role" formControlName="role" placeholder="Rol">
+            <option value="" disabled selected>Rol Seçiniz</option>
+            <option value="Admin">Admin</option>
+            <option value="User">User</option>
+          </select>
+          <div *ngIf="userForm.get('role')?.hasError('required') && userForm.get('role')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Rol Alanı zorunludur...
+          </div>
+        </div>
+        <!-- Adres Alanı -->
+        <div class="form-group">
+          <label for="address">Adres:</label>
+          <textarea class="form-control" id="adres" formControlName="adres" placeholder="Adres"></textarea>
+          <div *ngIf="userForm.get('address')?.hasError('required') && userForm.get('address')?.dirty"
+               class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> Adres Alanı zorunludur...
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-primary btn-lg colorful" [disabled]="!userForm.valid">
+            <i class="fas fa-sync-alt"></i> Güncelle 
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

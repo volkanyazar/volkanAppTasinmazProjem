@@ -1,0 +1,92 @@
+
+/* Tablo stilleri */
+.table {
+    background-color: #f0f0f0; /* Updated table background color */
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Tablo başlık stilleri */
+.table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Tablo başlık hücreleri */
+.table th {
+    padding: 12px;
+    text-align: center;
+    background-color: #0062cc; /* Updated header background color */
+    color: #fff;
+}
+
+/* Tablo veri hücreleri */
+.table td {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+/* Zebra çizgili tablo (opsiyonel) */
+.table tbody tr:nth-child(even) {
+    background-color: #e0e0e0;
+}
+
+/* Hücre içeriği stilini özelleştirme (örnek olarak) */
+.table td {
+    color: #333;
+    background-color: #f0f0f0; /* Updated cell background color */
+}
+
+/* Seçili satır stilini özelleştirme (opsiyonel) */
+.table tbody tr.selected {
+    background-color: #ffffcc;
+}
+
+/* "Sil" düğmesi stilini özelleştirme */
+.action-button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.report-button {
+    background-color: #333;
+    color: #fff;
+    float: right;
+    margin-bottom: 50px;
+    margin-right: 200px;
+    border-width: 2px;
+}
+
+.action-button:hover {
+    filter: brightness(1.2);
+}
+
+/* Taşınmaz bulunamadı mesajı stilini özelleştirme */
+.no-data-message {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+:host {
+    background-color: #007bff; /* Updated background color */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
