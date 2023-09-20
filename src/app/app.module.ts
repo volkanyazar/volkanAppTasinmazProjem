@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,9 @@ import { AdminGuard } from './services/admin.guard';
 import { AuthRedirectGuard } from './guards/auth-redirect.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { TestBed } from '@angular/core/testing';
+import { TasinmazMapComponent } from './tasinmaz-map/tasinmaz-map.component';
+import { LayerToggleComponent } from './layer-toggle/layer-toggle.component';
+import { LayerOpacityComponent } from './layer-opacity/layer-opacity.component';
 
 
 @NgModule({
@@ -39,6 +42,7 @@ import { TestBed } from '@angular/core/testing';
     AppComponent,
     LoginComponent,
     TasinmazComponent,
+    TasinmazMapComponent,
     NavComponent,
     LogsComponent,
     UsersComponent,
@@ -50,7 +54,9 @@ import { TestBed } from '@angular/core/testing';
     UserUpdateComponent,
     LogDetailComponent,
     LogdetailsFilterPipe,
-    NotFoundComponent
+    NotFoundComponent,
+    LayerToggleComponent,
+    LayerOpacityComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +79,7 @@ import { TestBed } from '@angular/core/testing';
       }
     })
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptor,
