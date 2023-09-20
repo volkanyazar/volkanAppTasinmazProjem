@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
-import TileLayer from 'ol/layer/Tile';
+import TileLayer from 'ol/layer/tile';
 
 @Component({
   selector: 'app-layer-toggle',
-  templateUrl: './layer-toggle.component.html',
-  styleUrls: ['./layer-toggle.component.css']
+  template: `
+    <label>{{ layerName }}</label>
+    <input type="checkbox" [checked]="layerVisibility" (click)="toggleLayer()" />
+  `,
 })
 export class LayerToggleComponent {
   @Input() layerName: string;
@@ -14,11 +16,7 @@ export class LayerToggleComponent {
     return this.layer.getVisible();
   }
 
-  set layerVisibility(visible: boolean) {
-    this.layer.setVisible(visible);
-  }
-
   toggleLayer() {
-    this.layerVisibility = !this.layerVisibility;
+    this.layer.setVisible(!this.layerVisibility);
   }
 }

@@ -1,10 +1,12 @@
-import { TileLayer } from 'ol/layer/Tile';
 import { Component, Input } from '@angular/core';
+import TileLayer from 'ol/layer/tile';
 
 @Component({
   selector: 'app-layer-opacity',
-  templateUrl: './layer-opacity.component.html',
-  styleUrls: ['./layer-opacity.component.css']
+  template: `
+    <label>{{ layerName }}</label>
+    <input type="range" [(ngModel)]="layerOpacity" (input)="changeOpacity()" min="0" max="1" step="0.01" />
+  `,
 })
 export class LayerOpacityComponent {
   @Input() layerName: string;
