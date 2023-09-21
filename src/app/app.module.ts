@@ -32,9 +32,9 @@ import { AdminGuard } from './services/admin.guard';
 import { AuthRedirectGuard } from './guards/auth-redirect.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { TestBed } from '@angular/core/testing';
-import { TasinmazMapComponent } from './tasinmaz-map/tasinmaz-map.component';
-import { LayerToggleComponent } from './layer-toggle/layer-toggle.component';
-import { LayerOpacityComponent } from './layer-opacity/layer-opacity.component';
+import { LayerOpacityComponent } from './tasinmaz/tasinmaz-map/layer-opacity/layer-opacity.component';
+import { LayerToggleComponent } from './tasinmaz/tasinmaz-map/layer-toggle/layer-toggle.component';
+import { TasinmazMapComponent } from './tasinmaz/tasinmaz-map/tasinmaz-map.component';
 
 
 @NgModule({
