@@ -73,7 +73,22 @@
             ADRES ALANI zorunludur.
           </div>
         </div>
-        
+        <!-- CoorX -->
+        <div class="form-group">
+          <label for="coorX">CoorX</label>
+          <input type="text" class="form-control colorful" id="coorX" formControlName="coorX" placeholder="x">
+          <div *ngIf="tasinmazForm.get('coorX')?.hasError('required') && tasinmazForm.get('coorX')?.dirty" class="error-message">
+            CoorX zorunludur.
+          </div>
+        </div>
+        <!-- CoorY -->
+        <div class="form-group">
+          <label for="coorY">CoorY</label>
+          <input type="text" class="form-control colorful" id="coorY" formControlName="coorY" placeholder="y">
+          <div *ngIf="tasinmazForm.get('coorY')?.hasError('required') && tasinmazForm.get('coorY')?.dirty" class="error-message">
+            CoorY zorunludur.
+          </div>
+        </div>
         <!-- Güncelle Butonu -->
         <div class="text-center">
           <button type="submit" class="btn btn-primary colorful">
@@ -82,6 +97,8 @@
         </div>
       </form>
     </div>
- 
   </div>
+</div>
+<div>
+<app-tasinmaz-map style="margin: 200px;"></app-tasinmaz-map>
 </div>

@@ -39,7 +39,7 @@ export class TasinmazMapComponent implements OnInit {
   ngOnInit() {
     // OpenStreetMap kaynağını oluşturun
     const openStreetMapSource = new OSM();
-
+    const extent = [26.0, 46.0, 45.0, 42.0];
     // Google Maps kaynağını oluşturun
     const googleMapsSource = new XYZ({
       url: 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
@@ -96,7 +96,7 @@ export class TasinmazMapComponent implements OnInit {
     });
 
     // Harita görünümünü sınırla
-    view.fit([26.0, 46.0, 45.0, 42.0], this.map.getSize()); // Türkiye sınırları
+    //view.fit(extent, this.map.getSize()); // Türkiye sınırları
   }
 
   toggleLayer(layer: TileLayer) {

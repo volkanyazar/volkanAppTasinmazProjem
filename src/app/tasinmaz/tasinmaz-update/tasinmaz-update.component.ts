@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoute ekle
 import { Tasinmaz } from 'src/app/models/tasinmaz';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CoordinateService } from 'src/app/services/coordinate-service.service';
 import { PageTitleService } from 'src/app/services/page-title.service';
 import { TasinmazService } from 'src/app/services/tasinmaz.service';
 
@@ -30,7 +31,8 @@ export class TasinmazUpdateComponent implements OnInit {
     private route: ActivatedRoute, // parametreli routeler için
     private tasinmazService: TasinmazService,
     private alertifyService: AlertifyService,
-    private authService:AuthService
+    private authService:AuthService,
+    private coordinateService:CoordinateService
   ) {
 
     this.tasinmazForm = this.formBuilder.group({
@@ -40,7 +42,9 @@ export class TasinmazUpdateComponent implements OnInit {
       ada: ['', Validators.required],
       parsel: ['', Validators.required],
       nitelik: ['', Validators.required],
-      adres: ['', Validators.required]
+      adres: ['', Validators.required],
+      coorX: [{ value: '', disabled: true }, Validators.required],
+      coorY: [{ value: '', disabled: true }, Validators.required]
     });
     
   }
@@ -84,10 +88,19 @@ export class TasinmazUpdateComponent implements OnInit {
         ada: firstSelectedTasinmaz.ada,
         parsel: firstSelectedTasinmaz.parsel,
         nitelik: firstSelectedTasinmaz.nitelik,
-        adres: firstSelectedTasinmaz.adres
+        adres: firstSelectedTasinmaz.adres,
+        coorX: firstSelectedTasinmaz.coorX,
+        coorY: firstSelectedTasinmaz.coorY
       });
     }
-    
+         // Diğer başlangıç işlemleri
+  this.coordinateService.coordinate$.subscribe((coordinates) => {
+    // Koordinatları burada kullanabilirsiniz.
+    const [x, y] = coordinates;
+    // Örneğin, bu koordinatları form kontrollerine yerleştirebilirsiniz.
+    this.tasinmazForm.get('coorX').setValue(x);
+    this.tasinmazForm.get('coorY').setValue(y);
+  });
    
   }
 
@@ -119,7 +132,9 @@ onIlceChange() {
         ada: this.updatedTasinmaz.ada || '',
         parsel: this.updatedTasinmaz.parsel || '',
         nitelik: this.updatedTasinmaz.nitelik || '',
-        adres: this.updatedTasinmaz.adres || ''
+        adres: this.updatedTasinmaz.adres || '',
+        coorX: this.updatedTasinmaz.coorX || '',
+        coorY: this.updatedTasinmaz.coorY || ''
       });
     }
   }
@@ -137,6 +152,9 @@ onIlceChange() {
           this.updatedTasinmaz.il = parseInt(this.tasinmazForm.get('il').value);
           this.updatedTasinmaz.mahalleId = parseInt(this.tasinmazForm.get('mahalleId').value);
           this.updatedTasinmaz.userId = parseInt(this.tokenUserId);
+          this.updatedTasinmaz.coorX = this.tasinmazForm.get('coorX').value.toString();
+          this.updatedTasinmaz.coorY = this.tasinmazForm.get('coorY').value.toString();
+
           // this.updatedTasinmaz.user = this.tasinmazService.getTasinmazByUserId(this.tokenUserId); //Todo
           console.log(this.updatedTasinmaz); // Taşınmaz ID
   
