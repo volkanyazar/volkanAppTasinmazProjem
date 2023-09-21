@@ -173,7 +173,9 @@ export class TasinmazComponent implements OnInit {
         'ADA': tasinmaz.ada,
         'PARSEL': tasinmaz.parsel,
         'NİTELİK': tasinmaz.nitelik,
-        'ADRES': tasinmaz.adres
+        'ADRES': tasinmaz.adres,
+        'X':tasinmaz.coorX,
+        'Y':tasinmaz.coorY
       };
     });
     this.tasinmazReportService.exportToExcel(dataToExport, 'tasinmazlar-rapor');

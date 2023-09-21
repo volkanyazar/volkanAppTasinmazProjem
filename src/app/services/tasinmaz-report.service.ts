@@ -9,7 +9,7 @@ export class TasinmazReportService {
 
   exportToExcel(data: any[], fileName: string): void {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {
-      header: ['ID', 'İL', 'İLÇE', 'MAHALLE', 'ADA', 'PARSEL', 'NİTELİK', 'ADRES'] 
+      header: ['ID', 'İL', 'İLÇE', 'MAHALLE', 'ADA', 'PARSEL', 'NİTELİK', 'ADRES','X','Y'] 
     });
 
     ws['A1'] = { v: 'ID', s: { font: { bold: true } } };
@@ -20,6 +20,8 @@ export class TasinmazReportService {
     ws['F1'] = { v: 'PARSEL', s: { font: { bold: true } } };
     ws['G1'] = { v: 'NİTELİK', s: { font: { bold: true } } };
     ws['H1'] = { v: 'ADRES', s: { font: { bold: true } } };
+    ws['I1'] = { v: 'X', s: { font: { bold: true } } };
+    ws['J1'] = { v: 'Y', s: { font: { bold: true } } };
 
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     
