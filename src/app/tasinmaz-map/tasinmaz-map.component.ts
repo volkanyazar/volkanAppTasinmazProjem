@@ -5,6 +5,7 @@ import TileLayer from 'ol/layer/tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
 import ScaleLine from 'ol/control/ScaleLine';
+import { defaults as defaultControls } from 'ol/control';
 
 @Component({
   selector: 'app-tasinmaz-map',
@@ -38,7 +39,7 @@ export class TasinmazMapComponent implements OnInit {
       target: this.elementRef.nativeElement.querySelector('#map'),
       layers: [this.openStreetMapLayer],
       view: view,
-      controls: [new ScaleLine({ units: 'metric',steps:4 })] // Ölçek çizgisi kontrolünü ekleyin
+      controls: defaultControls().extend([new ScaleLine()])
     });
 
     // Harita görünümünü sınırla
