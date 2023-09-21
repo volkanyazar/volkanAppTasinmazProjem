@@ -68,6 +68,7 @@ export class TasinmazComponent implements OnInit {
         this.tasinmazlar.sort((a, b) => a.tasinmazId - b.tasinmazId);
 
         this.updatePagedTasinmazlar();
+        //this.tasinmazService.markTasinmazlarOnMap(this.tasinmazlar);
         this.selectedTasinmazlar = this.tasinmazService.getSelectedTasinmazlar();
         console.log('Seçili Taşınmazlar:', this.selectedTasinmazlar);
       },

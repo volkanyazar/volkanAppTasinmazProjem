@@ -4,9 +4,14 @@ import TileLayer from 'ol/layer/tile';
 @Component({
   selector: 'app-layer-opacity',
   template: `
-    <label>{{ layerName }}</label>
-    <input type="range" [(ngModel)]="layerOpacity" (input)="changeOpacity()" min="0" max="1" step="0.01" />
+    <div class="layer-container">
+      <div class="layer-name">{{ layerName }}</div>
+      <div class="layer-opacity">
+        <input type="range" [(ngModel)]="layerOpacity" (input)="changeOpacity()" min="0" max="1" step="0.01" />
+      </div>
+    </div>
   `,
+  styleUrls: ['./layer-opacity.component.css'] // CSS dosyasını ekledik
 })
 export class LayerOpacityComponent {
   @Input() layerName: string;

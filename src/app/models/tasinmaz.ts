@@ -10,4 +10,6 @@ export class Tasinmaz{
     adres:string;
     user:string;
     userId:number;
+    coorX:string;
+    coorY:string;
 }

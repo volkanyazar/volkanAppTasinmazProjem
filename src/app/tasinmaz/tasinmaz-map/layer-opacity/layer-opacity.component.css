@@ -1,0 +1,13 @@
+.layer-container {
+    display: flex;
+    align-items: center; /* Yazı ve bileşenleri dikeyde ortala */
+    justify-content: space-between; /* Başlıkları ve opacity'i yatayda sağa ve sola hizala */
+  }
+  
+  .layer-opacity {
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+    margin-left: 5px;
+  }
+  

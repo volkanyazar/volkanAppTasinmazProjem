@@ -23,7 +23,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  margin: auto;
+  margin-left: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 5px;
@@ -31,7 +31,39 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Paneli sağ üst köşede göstermek için "align-items" kullanın */
+
+  gap: 10px;
 }
+.layer-container {
+  display: flex;
+  flex-direction: column; /* Bileşenleri dikeyde sırala */
+  align-items: flex-start; /* Bileşenleri yatayda sola hizala */
+
+  /* İstediğiniz stillemeleri burada ekleyebilirsiniz */
+}
+
+/* Yazıların stili */
+.app-layer-toggle label,
+.app-layer-opacity label {
+  /* İstediğiniz yazı stili */
+  font-weight: bold;
+}
+
+/* Toggle'ın stili */
+.app-layer-toggle input[type="checkbox"] {
+  /* İstediğiniz toggle stili */
+  margin-left: 20px; /* Yazıdan 5 piksel sağda görünmesini sağlar */
+}
+
+/* Opacity slider'ının stili */
+.app-layer-opacity input[type="range"] {
+  /* İstediğiniz slider stili */
+  width: 100px; /* Genişlik ayarı, istediğiniz kadar büyütebilirsiniz */
+  margin-left: 5px; /* Toggle'dan 5 piksel sağda görünmesini sağlar */
+  align-self: flex-start; /* Opacity bileşenini sola hizala */
+}
+
+
 
 .ol-scale-bar {
   background-color: rgba(255, 255, 255, 0.7);

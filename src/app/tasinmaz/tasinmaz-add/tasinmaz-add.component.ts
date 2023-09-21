@@ -8,6 +8,7 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/models/user';
+import { CoordinateService } from 'src/app/services/coordinate-service.service';
 
 @Component({
   selector: 'app-tasinmaz-add',
@@ -30,7 +31,8 @@ export class TasinmazAddComponent implements OnInit {
     private tasinmazService: TasinmazService,
     private alertifyService: AlertifyService,
     private authService:AuthService,
-    private userService:UserService
+    private userService:UserService,
+    private coordinateService:CoordinateService
   ) {
     this.tasinmazForm = this.formBuilder.group({
       il: ['', Validators.required],
@@ -39,10 +41,13 @@ export class TasinmazAddComponent implements OnInit {
       ada: ['', Validators.required], // 4 haneli sayılar için validator
       parsel: ['', Validators.required], // 4 haneli sayılar için validator
       nitelik: ['', Validators.required],
-      adres: ['', Validators.required]
+      adres: ['', Validators.required],
+      coorX: [{ value: '', disabled: true }, Validators.required],
+      coorY: [{ value: '', disabled: true }, Validators.required]
     });
+    
   }
-
+  
    // İl seçimi değiştiğinde
 onIlChange() {
   const selectedIl = this.tasinmazForm.get('il').value;
@@ -64,6 +69,15 @@ onIlceChange() {
     this.tasinmazService.getIller().subscribe(iller =>{
       this.iller = iller["data"];
     });
+
+     // Diğer başlangıç işlemleri
+  this.coordinateService.coordinate$.subscribe((coordinates) => {
+    // Koordinatları burada kullanabilirsiniz.
+    const [x, y] = coordinates;
+    // Örneğin, bu koordinatları form kontrollerine yerleştirebilirsiniz.
+    this.tasinmazForm.get('coorX').setValue(x);
+    this.tasinmazForm.get('coorY').setValue(y);
+  });
   }
 
   addTasinmaz() {
@@ -79,6 +93,9 @@ onIlceChange() {
           this.newTasinmaz.il = parseInt(this.tasinmazForm.get('il').value);
           this.newTasinmaz.mahalleId = parseInt(this.tasinmazForm.get('mahalleId').value);
           this.newTasinmaz.userId = parseInt(this.tokenUserId);
+          this.newTasinmaz.coorX = this.tasinmazForm.get('coorX').value.toString();
+          this.newTasinmaz.coorY = this.tasinmazForm.get('coorY').value.toString();
+
   
           console.log(this.newTasinmaz);
           this.tasinmazService.addTasinmaz(this.newTasinmaz).subscribe(

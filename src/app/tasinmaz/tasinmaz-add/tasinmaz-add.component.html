@@ -153,6 +153,49 @@
               ADRES ALANI zorunludur...
             </div>
           </div>
+          <!-- coorX Alanı -->
+          <div class="form-group">
+            <label for="coorX">coorX</label>
+            <input
+              type="text"
+              class="form-control"
+              id="coorX"
+              formControlName="coorX"
+              placeholder="x"
+              required
+            />
+          </div>
+          <div
+              *ngIf="
+                tasinmazForm.get('coorX')?.hasError('required') &&
+                tasinmazForm.get('coorX')?.dirty
+              "
+              class="text-danger"
+            >
+              X Koordinatı zorunludur...
+            </div>
+
+          <!-- coorY Alanı -->
+          <div class="form-group">
+            <label for="coorY">coorY</label>
+            <input
+              type="text"
+              class="form-control"
+              id="coorY"
+              formControlName="coorY"
+              placeholder="y"
+              required
+            />
+          </div>
+          <div
+          *ngIf="
+            tasinmazForm.get('coorY')?.hasError('required') &&
+            tasinmazForm.get('coorY')?.dirty
+          "
+          class="text-danger"
+        >
+          Y Koordinatı zorunludur...
+        </div>
 
           <!-- Gönder Butonu -->
           <div class="form-group text-center">
@@ -169,3 +212,7 @@
     </div>
   </div>
 </div>
+<div>
+  <app-tasinmaz-map style="margin: 200px;"></app-tasinmaz-map>
+</div>
+

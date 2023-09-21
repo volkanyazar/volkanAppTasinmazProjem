@@ -18,6 +18,9 @@ import { TasinmazComponent } from '../tasinmaz/tasinmaz.component';
 export class TasinmazService {
   private selectedTasinmazlar: Tasinmaz[] = [];
   private tasinmazComponent:TasinmazComponent
+  private coorX: number;
+  private coorY: number;
+  private coordinatesSubject: BehaviorSubject<[number, number]> = new BehaviorSubject<[number, number]>([null, null]);
   
   constructor(private httpClient: HttpClient,private authService:AuthService) { }
   setTasinmazComponent(component: TasinmazComponent) {
@@ -112,6 +115,26 @@ export class TasinmazService {
   setSelectedTasinmazlar(tasinmazlar: Tasinmaz[]): void {
     this.selectedTasinmazlar = tasinmazlar;
   }
+  
+//  // Güncellenmiş markTasinmazlarOnMap işlevi
+//  markTasinmazlarOnMap(tasinmazlar: Tasinmaz[]) {
+//   for (const tasinmaz of tasinmazlar) {
+//     const coordinatesString = tasinmaz.x + "," + tasinmaz.y;
+//     const coordinatesArray = coordinatesString.split(',');
+//     const xCoordinate = parseFloat(coordinatesArray[0]);
+//     const yCoordinate = parseFloat(coordinatesArray[1]);
+//     this.coorX = xCoordinate;
+//     this.coorY = yCoordinate;
+
+//     // Koordinatları BehaviorSubject ile yayınla
+//     this.coordinatesSubject.next([this.coorX, this.coorY]);
+//   }
+// }
+
+// Koordinatları alma işlevi
+getCoordinates(): Observable<[number, number]> {
+  return this.coordinatesSubject.asObservable();
+}
 
   handleError(err: HttpErrorResponse) {
     let errorMessage = '';

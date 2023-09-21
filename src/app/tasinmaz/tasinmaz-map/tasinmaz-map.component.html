@@ -1,9 +1,19 @@
 <div id="map-container" class="map-container">
     <div id="map" class="map"></div>
     <div class="panel">
-        <app-layer-toggle [layer]="openStreetMapLayer" layerName="OpenStreetMap" class="panel-button"></app-layer-toggle>
-        <app-layer-opacity [layer]="openStreetMapLayer" layerName="OpenStreetMap" class="panel-button"></app-layer-opacity>
-    <!-- <div id="map-controls" class="map-controls"></div> -->
-    <div id="scale-line" class="ol-scale-line"></div>
+        <!-- OpenStreetMap katmanı için toggle ve opaklık bileşenleri -->
+        <div class="layer-container">
+            <app-layer-toggle [layerName]="'OpenStreetMap'" [layer]="openStreetMapLayer" [layerVisible]="openStreetMapLayerVisible"></app-layer-toggle>
+            <app-layer-opacity [layerName]="'OpenStreetMap'" [layer]="openStreetMapLayer"></app-layer-opacity>
+        </div>
+
+        <!-- Google Maps katmanı için toggle ve opaklık bileşenleri -->
+        <div class="layer-container">
+            <app-layer-toggle [layerName]="'Google Maps'" [layer]="googleMapsLayer" [layerVisible]="googleMapsLayerVisible"></app-layer-toggle>
+            <app-layer-opacity [layerName]="'Google Maps'" [layer]="googleMapsLayer"></app-layer-opacity>
+        </div>
+
+        <!-- Diğer harita kontrolleri -->
+        <div id="scale-line" class="ol-scale-line"></div>
     </div>
 </div>
