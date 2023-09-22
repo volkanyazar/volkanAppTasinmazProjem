@@ -85,7 +85,7 @@
   <button name="actionButtons" class="action-button delete-button" (click)="deleteSelectedTasinmaz()" [disabled]="selectedTasinmazlar.length <= 0">
     <i class="fas fa-trash"></i> Sil
   </button>
-  <button name="actionButtons" class="action-button edit-button" routerLink="/tasinmaz/tasinmaz-update" (click)="navigateToUpdateTasinmaz()" [disabled]="selectedTasinmazlar.length <= 0">
+  <button name="actionButtons" class="action-button edit-button" (click)="navigateToUpdateTasinmaz()" [disabled]="selectedTasinmazlar.length <= 0">
     <i class="fas fa-edit"></i> Güncelle
   </button>
   <button name="actionButtons" class="action-button report-button" (click)="generateReport()">

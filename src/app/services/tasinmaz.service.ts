@@ -20,6 +20,7 @@ export class TasinmazService {
   private tasinmazComponent:TasinmazComponent
   private coorX: number;
   private coorY: number;
+  private coordinatesSubjectD: BehaviorSubject<[number, number][]> = new BehaviorSubject<[number, number][]>([]);
   private coordinatesSubject: BehaviorSubject<[number, number]> = new BehaviorSubject<[number, number]>([null, null]);
   
   constructor(private httpClient: HttpClient,private authService:AuthService) { }
@@ -116,20 +117,11 @@ export class TasinmazService {
     this.selectedTasinmazlar = tasinmazlar;
   }
   
-//  // Güncellenmiş markTasinmazlarOnMap işlevi
-//  markTasinmazlarOnMap(tasinmazlar: Tasinmaz[]) {
-//   for (const tasinmaz of tasinmazlar) {
-//     const coordinatesString = tasinmaz.x + "," + tasinmaz.y;
-//     const coordinatesArray = coordinatesString.split(',');
-//     const xCoordinate = parseFloat(coordinatesArray[0]);
-//     const yCoordinate = parseFloat(coordinatesArray[1]);
-//     this.coorX = xCoordinate;
-//     this.coorY = yCoordinate;
-
-//     // Koordinatları BehaviorSubject ile yayınla
-//     this.coordinatesSubject.next([this.coorX, this.coorY]);
-//   }
-// }
+  markTasinmazlarOnMap(coordinates: [number, number][]): void {
+    // Koordinatları BehaviorSubject ile yayınla
+    this.coordinatesSubjectD.next(coordinates);
+  }
+  
 
 // Koordinatları alma işlevi
 getCoordinates(): Observable<[number, number]> {

@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TasinmazService } from '../services/tasinmaz.service';
 import { PageTitleService } from '../services/page-title.service';
 import { Tasinmaz } from '../models/tasinmaz';
 import { Router } from '@angular/router';
+import { fromLonLat } from 'ol/proj';
 import { AlertifyService } from '../services/alertify.service';
 import { TasinmazReportService } from '../services/tasinmaz-report.service';
 import { Mahalle } from '../models/mahalle';
 import { Il } from '../models/il';
 import { Ilce } from '../models/ilce';
 import { AuthService } from '../services/auth.service';
+import { TasinmazMapComponent } from './tasinmaz-map/tasinmaz-map.component';
 
 @Component({
   selector: 'app-tasinmaz',
@@ -18,6 +20,7 @@ import { AuthService } from '../services/auth.service';
   providers: [TasinmazService, TasinmazReportService]
 })
 export class TasinmazComponent implements OnInit {
+  @ViewChild(TasinmazMapComponent) mapComponent: TasinmazMapComponent;
   tasinmazlar: Tasinmaz[];
   currentPage = 1;
   itemsPerPage = 10;
@@ -68,7 +71,11 @@ export class TasinmazComponent implements OnInit {
         this.tasinmazlar.sort((a, b) => a.tasinmazId - b.tasinmazId);
 
         this.updatePagedTasinmazlar();
-        //this.tasinmazService.markTasinmazlarOnMap(this.tasinmazlar);
+    // this.tasinmazlar.forEach((tasinmaz) => {
+    //   if (tasinmaz.coorX !== null && tasinmaz.coorY !== null) {
+    //   this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
+    //   }
+    // });
         this.selectedTasinmazlar = this.tasinmazService.getSelectedTasinmazlar();
         console.log('Seçili Taşınmazlar:', this.selectedTasinmazlar);
       },
@@ -77,7 +84,21 @@ export class TasinmazComponent implements OnInit {
       }
     );
   }
-
+  updateMapViewForSingleSelectedTasinmaz() {
+    if (this.selectedTasinmazlar.length === 1) {
+      // Sadece bir taşınmaz seçiliyse, bu taşınmazın koordinatlarını alın
+      const selectedTasinmaz = this.selectedTasinmazlar[0];
+      const coorX = parseFloat(selectedTasinmaz.coorX);
+      const coorY = parseFloat(selectedTasinmaz.coorY);
+      
+      // Harita görünümünü bu taşınmazın koordinatlarına göre güncelleyin ve zoom seviyesini ayarlayın
+      this.mapComponent.updateMapViewForCoordinates(coorX, coorY, 7); // Zoom seviyesini istediğiniz değere ayarlayın
+    }
+  }
+  
+  
+  
+  
   getIlName(ilId: number): string {
     const il = this.iller.find((item) => item.ilId === ilId);
     return il ? il.ilName : '';
@@ -95,16 +116,20 @@ export class TasinmazComponent implements OnInit {
   
   navigateToUpdateTasinmaz() {
     if (this.selectedTasinmazlar.length === 1) {
-      // Seçili taşınmazı alın
+      // Sadece bir tasinmaz seçiliyse yönlendirme yap
       const selectedTasinmaz = this.selectedTasinmazlar[0];
-
-      // Güncelleme sayfasına yönlendirin ve taşınmazın kimliğini parametre olarak iletilen id'ye atayın
       this.router.navigateByUrl('/tasinmaz/tasinmaz-update?id=' + selectedTasinmaz.tasinmazId);
     } else {
-      // Seçili taşınmaz yoksa uyarı verin veya işlem yapın
-      alert('Lütfen güncellemek için sadece bir adet taşınmaz seçin.');
+      // Birden fazla veya hiç tasinmaz seçiliyse uyarı ver veya işlem yapma
+      if (this.selectedTasinmazlar.length > 1) {
+        this.alertifyService.error('Lütfen güncellemek için sadece bir adet taşınmaz seçin.');
+      } else {
+        this.alertifyService.error('Lütfen güncellemek için bir taşınmaz seçin.');
+      }
     }
   }
+  
+  
 
   search() {
     if (this.searchText.trim() === '') {
@@ -147,6 +172,9 @@ export class TasinmazComponent implements OnInit {
       this.selectedTasinmazlar.push(tasinmaz);
       this.selectedTasinmazlarSpecific.push(tasinmaz);
       this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
+      this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
+      this.updateMapViewForSingleSelectedTasinmaz();
+
       console.log(this.selectedTasinmazlar[0].tasinmazId);
     } else {
       // Seçili değilse, seçili taşınmazları çıkarın
@@ -155,6 +183,8 @@ export class TasinmazComponent implements OnInit {
         this.selectedTasinmazlar.splice(index, 1);
         this.selectedTasinmazlarSpecific.splice(index, 1); // İlgili taşınmazı özel listeden de çıkarın
         this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
+        this.mapComponent.unmarkTasinmazAtCoordinates(parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY));
+        this.mapComponent.resetZoom();
       }
     }
   }

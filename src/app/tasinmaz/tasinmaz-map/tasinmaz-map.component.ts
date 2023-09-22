@@ -20,8 +20,6 @@ import { toStringXY } from 'ol/coordinate';
 import { TasinmazService } from 'src/app/services/tasinmaz.service';
 import { CoordinateService } from 'src/app/services/coordinate-service.service';
 
-
-
 @Component({
   selector: 'app-tasinmaz-map',
   templateUrl: './tasinmaz-map.component.html',
@@ -34,17 +32,15 @@ export class TasinmazMapComponent implements OnInit {
   vectorLayer: VectorLayer;
   vectorSource: VectorSource;
 
-  constructor(private elementRef: ElementRef,private tasinmazService:TasinmazService,private coordinateService:CoordinateService) { }
-
+  constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
+  markedTasinmazlar: Feature[] = [];
   ngOnInit() {
     // OpenStreetMap kaynağını oluşturun
     const openStreetMapSource = new OSM();
-    const extent = [26.0, 46.0, 45.0, 42.0];
     // Google Maps kaynağını oluşturun
     const googleMapsSource = new XYZ({
       url: 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
     });
-    
 
     // OpenStreetMap katmanını oluşturun
     this.openStreetMapLayer = new TileLayer({
@@ -66,18 +62,20 @@ export class TasinmazMapComponent implements OnInit {
     // Vektör katmanını oluşturun ve kaynağı ekleyin
     this.vectorLayer = new VectorLayer({
       source: this.vectorSource,
+      style: new Style({
+        image: new CircleStyle({
+          radius: 6,
+          fill: new Fill({ color: 'red' }), // İç dolgu rengi
+          stroke: new Stroke({ color: 'white', width: 2 }), // Dış çizgi rengi
+        }),
+      }),
     });
-    this.tasinmazService.getCoordinates().subscribe(([coorX, coorY]) => {
-      if (coorX !== null && coorY !== null) {
-        this.markTasinmaz(coorX, coorY, this.vectorSource);
-      }
-    });
-    // Türkiye'nin koordinatlarını kullanarak harita görünümünü tanımlayın ve zoom seviyesini artırın
+
+    // Türkiye'nin koordinatlarını kullanarak harita görünümünü tanımlayın ve zoom seviyesini ayarlayın
     const view = new View({
-      center: fromLonLat([35, 39]),
+      center: fromLonLat([0, 0]),
       zoom: 6,
-      minZoom: 6,
-      maxZoom: 18,
+
     });
 
     // Harita oluştur
@@ -87,16 +85,18 @@ export class TasinmazMapComponent implements OnInit {
       view: view,
       controls: defaultControls().extend([new ScaleLine()])
     });
-      // Haritaya tıklama olayını ekleyin
-    this.map.on('click', (event) => {
-      const coordinates = event.coordinate;
-      const coordinateString = toStringXY(coordinates, 2); // Koordinatları formatlayın
-      console.log('Tıklanan Koordinatlar:', coordinateString);
-      this.coordinateService.setCoordinates(coordinates);
-    });
 
-    // Harita görünümünü sınırla
-    //view.fit(extent, this.map.getSize()); // Türkiye sınırları
+// Haritaya tıklama olayını ekleyin
+this.map.on('click', (event) => {
+  const coordinates = event.coordinate;
+  const coordinateString = toStringXY(coordinates, 2); // Koordinatları formatlayın
+  console.log('Tıklanan Koordinatlar:', coordinateString);
+  this.coordinateService.setCoordinates(coordinates);
+  // Tıklama olayı gerçekleştiğinde işaretleme fonksiyonunu çağırın
+  this.markTasinmazAtCoordinates(coordinates);
+});
+
+
   }
 
   toggleLayer(layer: TileLayer) {
@@ -108,26 +108,59 @@ export class TasinmazMapComponent implements OnInit {
     const newOpacity = currentOpacity === 1 ? 0.5 : 1;
     layer.setOpacity(newOpacity);
   }
+
+  updateMapViewForCoordinates(coorX: number, coorY: number, zoomLevel: number) {
+    this.map.getView().setCenter([coorX, coorY]);
+    this.map.getView().setZoom(zoomLevel);
+    console.log(coorX);
+    console.log(coorY);
+    console.log(5);
+
+
+  }
   
+  resetZoom() {
+    const defaultZoom = 6; // Önceki zoom seviyesini burada tanımlayabilirsiniz
+    const defaultCenter = fromLonLat([35, 39]); // Önceki merkez koordinatını burada tanımlayabilirsiniz
+    this.map.getView().setCenter(defaultCenter);
+    this.map.getView().setZoom(defaultZoom);
+  }
+  
+  markTasinmazAtCoordinates(coordinates: [number, number]) {
+    const marker = new Feature({
+      geometry: new Point(coordinates),
+    });
 
-// Mark Tasinmaz işlevi
-markTasinmaz(x: number, y: number, vectorSource: VectorSource) {
-  const coordinates = fromLonLat([x, y]);
-  const marker = new Feature({
-    geometry: new Point(coordinates),
-  });
+    // İşaretleme stili ayarlayabilirsiniz
+    marker.setStyle(new Style({
+      image: new CircleStyle({
+        radius: 6,
+        fill: new Fill({ color: 'red' }), // İç dolgu rengi
+        stroke: new Stroke({ color: 'white', width: 2 }), // Dış çizgi rengi
+      }),
+    }));
 
-  // İşaretleme stili ayarlayabilirsiniz
-  marker.setStyle(new Style({
-    image: new CircleStyle({
-      radius: 6,
-      fill: new Fill({ color: 'red' }),
-      stroke: new Stroke({ color: 'black', width: 2 }),
-    }),
-  }));
+    // İşaretlenmiş taşınmazları listeye ekleyin
+    this.markedTasinmazlar.push(marker);
 
-  vectorSource.addFeature(marker);
-}
-
-
+    // Vektör kaynağına özellik ekleyin
+    this.vectorSource.clear();
+    this.vectorSource.addFeatures(this.markedTasinmazlar);
+  }
+  unmarkTasinmazAtCoordinates(coorX: number, coorY: number) {
+    // İşareti kaldırmak istediğiniz koordinatları kullanarak işareti bulun
+    const index = this.markedTasinmazlar.findIndex((feature) => {
+      const geometry = feature.getGeometry();
+      const coordinates = geometry.getCoordinates();
+      return coordinates[0] === coorX && coordinates[1] === coorY;
+    });
+  
+    if (index !== -1) {
+      // İşareti kaldırın ve markedTasinmazlar dizisinden çıkarın
+      const removedFeature = this.markedTasinmazlar.splice(index, 1)[0];
+      this.vectorSource.removeFeature(removedFeature);
+    }
+  }
+  
+  
 }

@@ -30,7 +30,8 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/alertifyjs/build/css/alertify.min.css",
               "node_modules/alertifyjs/build/css/themes/bootstrap.min.css",
-              "src/styles/alertify-custom.css"
+              "src/styles/alertify-custom.css",
+              "node_modules/ol/ol.css"
             ],
             "scripts": [
               "node_modules/hammerjs/hammer.js",
