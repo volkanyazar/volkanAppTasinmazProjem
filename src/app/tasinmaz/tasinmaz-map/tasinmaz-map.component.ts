@@ -31,6 +31,7 @@ export class TasinmazMapComponent implements OnInit {
   googleMapsLayer: TileLayer;
   vectorLayer: VectorLayer;
   vectorSource: VectorSource;
+  isMarked = false;
 
   constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
   markedTasinmazlar: Feature[] = [];
@@ -73,7 +74,7 @@ export class TasinmazMapComponent implements OnInit {
 
     // Türkiye'nin koordinatlarını kullanarak harita görünümünü tanımlayın ve zoom seviyesini ayarlayın
     const view = new View({
-      center: fromLonLat([0, 0]),
+      center: fromLonLat([35, 39]),
       zoom: 6,
 
     });
@@ -88,12 +89,14 @@ export class TasinmazMapComponent implements OnInit {
 
 // Haritaya tıklama olayını ekleyin
 this.map.on('click', (event) => {
+  const MAX_SELECTED_TASINMAZ = this.tasinmazService.getTasinmazlarLength();
   const coordinates = event.coordinate;
   const coordinateString = toStringXY(coordinates, 2); // Koordinatları formatlayın
   console.log('Tıklanan Koordinatlar:', coordinateString);
   this.coordinateService.setCoordinates(coordinates);
   // Tıklama olayı gerçekleştiğinde işaretleme fonksiyonunu çağırın
   this.markTasinmazAtCoordinates(coordinates);
+
 });
 
 
@@ -109,6 +112,7 @@ this.map.on('click', (event) => {
     layer.setOpacity(newOpacity);
   }
 
+  
   updateMapViewForCoordinates(coorX: number, coorY: number, zoomLevel: number) {
     this.map.getView().setCenter([coorX, coorY]);
     this.map.getView().setZoom(zoomLevel);

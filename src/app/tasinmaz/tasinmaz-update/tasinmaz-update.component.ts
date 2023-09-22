@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router'; // ActivatedRoute eklenmiştir
 import { Tasinmaz } from 'src/app/models/tasinmaz';
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CoordinateService } from 'src/app/services/coordinate-service.service';
 import { PageTitleService } from 'src/app/services/page-title.service';
 import { TasinmazService } from 'src/app/services/tasinmaz.service';
+import { TasinmazMapComponent } from '../tasinmaz-map/tasinmaz-map.component';
 
 @Component({
   selector: 'app-tasinmaz-update',
@@ -16,6 +17,7 @@ import { TasinmazService } from 'src/app/services/tasinmaz.service';
 export class TasinmazUpdateComponent implements OnInit {
 
   tasinmazForm: FormGroup;
+  @ViewChild(TasinmazMapComponent) mapComponent: TasinmazMapComponent;
   updatedTasinmaz: Tasinmaz = new Tasinmaz();
   selectedTasinmazlar: Tasinmaz[] = [];
   iller: any[] = [];
@@ -98,6 +100,10 @@ export class TasinmazUpdateComponent implements OnInit {
     // Koordinatları burada kullanabilirsiniz.
     const [x, y] = coordinates;
     // Örneğin, bu koordinatları form kontrollerine yerleştirebilirsiniz.
+    if(this.mapComponent.markedTasinmazlar.length>0){
+      const lastMarkedFeature = this.mapComponent.markedTasinmazlar.pop(); // En son işareti çıkar
+    this.mapComponent.vectorSource.removeFeature(lastMarkedFeature); // Vektör kaynağından kaldır
+    }
     this.tasinmazForm.get('coorX').setValue(x);
     this.tasinmazForm.get('coorY').setValue(y);
   });

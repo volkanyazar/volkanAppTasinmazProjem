@@ -71,11 +71,15 @@ export class TasinmazComponent implements OnInit {
         this.tasinmazlar.sort((a, b) => a.tasinmazId - b.tasinmazId);
 
         this.updatePagedTasinmazlar();
-    // this.tasinmazlar.forEach((tasinmaz) => {
-    //   if (tasinmaz.coorX !== null && tasinmaz.coorY !== null) {
-    //   this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
-    //   }
-    // });
+    this.tasinmazlar.forEach((tasinmaz) => {
+      if (tasinmaz.coorX !== null && tasinmaz.coorY !== null) {
+        
+      // sfr:147258. <=
+        this.tasinmazService.setTasinmazLength(this.tasinmazlar.length);
+        this.mapComponent.markTasinmazAtCoordinates([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]);  
+      
+    }
+    });
         this.selectedTasinmazlar = this.tasinmazService.getSelectedTasinmazlar();
         console.log('Seçili Taşınmazlar:', this.selectedTasinmazlar);
       },
@@ -84,6 +88,7 @@ export class TasinmazComponent implements OnInit {
       }
     );
   }
+  
   updateMapViewForSingleSelectedTasinmaz() {
     if (this.selectedTasinmazlar.length === 1) {
       // Sadece bir taşınmaz seçiliyse, bu taşınmazın koordinatlarını alın
@@ -92,7 +97,7 @@ export class TasinmazComponent implements OnInit {
       const coorY = parseFloat(selectedTasinmaz.coorY);
       
       // Harita görünümünü bu taşınmazın koordinatlarına göre güncelleyin ve zoom seviyesini ayarlayın
-      this.mapComponent.updateMapViewForCoordinates(coorX, coorY, 7); // Zoom seviyesini istediğiniz değere ayarlayın
+      this.mapComponent.updateMapViewForCoordinates(coorX, coorY, 9); // Zoom seviyesini istediğiniz değere ayarlayın
     }
   }
   
@@ -172,7 +177,7 @@ export class TasinmazComponent implements OnInit {
       this.selectedTasinmazlar.push(tasinmaz);
       this.selectedTasinmazlarSpecific.push(tasinmaz);
       this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
-      this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
+      //this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
       this.updateMapViewForSingleSelectedTasinmaz();
 
       console.log(this.selectedTasinmazlar[0].tasinmazId);
@@ -183,7 +188,7 @@ export class TasinmazComponent implements OnInit {
         this.selectedTasinmazlar.splice(index, 1);
         this.selectedTasinmazlarSpecific.splice(index, 1); // İlgili taşınmazı özel listeden de çıkarın
         this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
-        this.mapComponent.unmarkTasinmazAtCoordinates(parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY));
+        //this.mapComponent.unmarkTasinmazAtCoordinates(parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY));
         this.mapComponent.resetZoom();
       }
     }

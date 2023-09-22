@@ -18,8 +18,8 @@ import { TasinmazComponent } from '../tasinmaz/tasinmaz.component';
 export class TasinmazService {
   private selectedTasinmazlar: Tasinmaz[] = [];
   private tasinmazComponent:TasinmazComponent
-  private coorX: number;
-  private coorY: number;
+  private isMarked: boolean = false;
+  private tasinmazlngt;
   private coordinatesSubjectD: BehaviorSubject<[number, number][]> = new BehaviorSubject<[number, number][]>([]);
   private coordinatesSubject: BehaviorSubject<[number, number]> = new BehaviorSubject<[number, number]>([null, null]);
   
@@ -28,6 +28,13 @@ export class TasinmazService {
     this.tasinmazComponent = component;
   }
 
+  setTasinmazLength(tasinmaz:number){
+    this. tasinmazlngt =tasinmaz;
+  }
+
+  getTasinmazlarLength(){
+    return this.tasinmazlngt;
+  }
   getTasinmazComponent(): TasinmazComponent {
     return this.tasinmazComponent;
   }
@@ -127,7 +134,13 @@ export class TasinmazService {
 getCoordinates(): Observable<[number, number]> {
   return this.coordinatesSubject.asObservable();
 }
+setIsMarked(isMarked: boolean) {
+  this.isMarked = isMarked;
+}
 
+getIsMarked(): boolean {
+  return this.isMarked;
+}
   handleError(err: HttpErrorResponse) {
     let errorMessage = '';
     if (err.error instanceof ErrorEvent) {
