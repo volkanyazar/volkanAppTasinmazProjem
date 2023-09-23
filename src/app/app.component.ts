@@ -1,7 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { Observable, Subscription, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +8,7 @@ import { Observable, Subscription, fromEvent } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  scrollEvent$: Observable<Event>;
-  scrollSubscription: Subscription;
-
-  constructor(private authService: AuthService, private router: Router) {
-    this.scrollEvent$ = new Observable((observer) => {
-      this.scrollSubscription = fromEvent(window, 'scroll').subscribe((event) => {
-        observer.next(event);
-      });
-    });
-  }
-
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event) {
-    // Scroll olayı gerçekleştiğinde yapılması gereken işlemleri buraya ekleyebilirsiniz.
-  }
+  constructor(private authService: AuthService, private router: Router) {}
   
   name: string | null = null;
 
@@ -42,12 +27,5 @@ export class AppComponent implements OnInit {
 
   logOut() {
     this.authService.logOut();
-  }
-
-  ngOnDestroy() {
-    // Component yok edildiğinde scroll dinleyici aboneliğini iptal edin
-    if (this.scrollSubscription) {
-      this.scrollSubscription.unsubscribe();
-    }
   }
 }
