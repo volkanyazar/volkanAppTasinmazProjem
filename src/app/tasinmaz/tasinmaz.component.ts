@@ -52,6 +52,7 @@ export class TasinmazComponent implements OnInit {
 
   ngOnInit() {
     this.pageTitleService.setPageTitle('Mevcut Taşınmazlar Listesi');
+    this.mapComponent.toggleTakeCoordinate();
     this.tasinmazService.getMahalleler().subscribe(mahalleler=>{
       this.mahalleler = mahalleler["data"];
     });
@@ -76,10 +77,9 @@ export class TasinmazComponent implements OnInit {
         
       // sfr:147258. <=
         this.tasinmazService.setTasinmazLength(this.tasinmazlar.length);
-        this.mapComponent.markTasinmazAtCoordinates([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]);  
-      
-    }
+        this.mapComponent.markTasinmazAtCoordinates([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]);      }
     });
+        this.mapComponent.toggleMapMarking();
         this.selectedTasinmazlar = this.tasinmazService.getSelectedTasinmazlar();
         console.log('Seçili Taşınmazlar:', this.selectedTasinmazlar);
       },
@@ -177,7 +177,6 @@ export class TasinmazComponent implements OnInit {
       this.selectedTasinmazlar.push(tasinmaz);
       this.selectedTasinmazlarSpecific.push(tasinmaz);
       this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
-      //this.mapComponent.markTasinmazAtCoordinates(([parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY)]));
       this.updateMapViewForSingleSelectedTasinmaz();
 
       console.log(this.selectedTasinmazlar[0].tasinmazId);
@@ -188,7 +187,6 @@ export class TasinmazComponent implements OnInit {
         this.selectedTasinmazlar.splice(index, 1);
         this.selectedTasinmazlarSpecific.splice(index, 1); // İlgili taşınmazı özel listeden de çıkarın
         this.tasinmazService.setSelectedTasinmazlar(this.selectedTasinmazlar);
-        //this.mapComponent.unmarkTasinmazAtCoordinates(parseFloat(tasinmaz.coorX), parseFloat(tasinmaz.coorY));
         this.mapComponent.resetZoom();
       }
     }

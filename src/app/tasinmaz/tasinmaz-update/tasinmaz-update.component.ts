@@ -66,6 +66,11 @@ export class TasinmazUpdateComponent implements OnInit {
           this.selectedTasinmazlar[0] = this.updatedTasinmaz;
           console.log(this.tasinmazService.getSelectedTasinmazlar());
           this.fillFormWithTasinmazData();
+        this.mapComponent.markTasinmazAtCoordinates([parseFloat(this.updatedTasinmaz.coorX), parseFloat(this.updatedTasinmaz.coorY)]);  
+
+          // Koordinatları forma doldurun
+       // this.tasinmazForm.get('coorX').setValue(this.updatedTasinmaz.coorX);
+       // this.tasinmazForm.get('coorY').setValue(this.updatedTasinmaz.coorY);
         },
         (error) => {
           console.error('Tasinmaz alınamadı:', error);

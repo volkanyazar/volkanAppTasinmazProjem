@@ -32,6 +32,8 @@ export class TasinmazMapComponent implements OnInit {
   vectorLayer: VectorLayer;
   vectorSource: VectorSource;
   isMarked = false;
+  allowMapMarking: boolean = true;
+  allowTakeCoordinate:boolean = true;
 
   constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
   markedTasinmazlar: Feature[] = [];
@@ -88,17 +90,16 @@ export class TasinmazMapComponent implements OnInit {
     });
 
 // Haritaya tıklama olayını ekleyin
+if(this.allowTakeCoordinate){
 this.map.on('click', (event) => {
-  const MAX_SELECTED_TASINMAZ = this.tasinmazService.getTasinmazlarLength();
   const coordinates = event.coordinate;
   const coordinateString = toStringXY(coordinates, 2); // Koordinatları formatlayın
   console.log('Tıklanan Koordinatlar:', coordinateString);
   this.coordinateService.setCoordinates(coordinates);
   // Tıklama olayı gerçekleştiğinde işaretleme fonksiyonunu çağırın
   this.markTasinmazAtCoordinates(coordinates);
-
 });
-
+}
 
   }
 
@@ -129,8 +130,15 @@ this.map.on('click', (event) => {
     this.map.getView().setCenter(defaultCenter);
     this.map.getView().setZoom(defaultZoom);
   }
+  toggleMapMarking() {
+    this.allowMapMarking = !this.allowMapMarking;
+  }
   
+  toggleTakeCoordinate() {
+    this.allowTakeCoordinate = !this.allowTakeCoordinate;
+  }
   markTasinmazAtCoordinates(coordinates: [number, number]) {
+    if (this.allowMapMarking) {
     const marker = new Feature({
       geometry: new Point(coordinates),
     });
@@ -150,6 +158,7 @@ this.map.on('click', (event) => {
     // Vektör kaynağına özellik ekleyin
     this.vectorSource.clear();
     this.vectorSource.addFeatures(this.markedTasinmazlar);
+    }
   }
   unmarkTasinmazAtCoordinates(coorX: number, coorY: number) {
     // İşareti kaldırmak istediğiniz koordinatları kullanarak işareti bulun
