@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import TileLayer from 'ol/layer/tile';
 
 @Component({
@@ -6,14 +6,15 @@ import TileLayer from 'ol/layer/tile';
   template: `
     <div class="layer-name">{{ layerName }}</div>
     <div class="layer-visibility">
-      <input type="checkbox" [checked]="layerVisibility" (click)="toggleLayer()" />
+      <input type="checkbox" [checked]="layerVisibility" (change)="toggleLayer()" />
     </div>
   `,
-  styleUrls: ['./layer-toggle.component.css'] // CSS dosyasını ekledik
+  styleUrls: ['./layer-toggle.component.css']
 })
 export class LayerToggleComponent {
   @Input() layerName: string;
   @Input() layer: TileLayer;
+  @Output() layerVisibilityChanged = new EventEmitter<boolean>();
 
   get layerVisibility() {
     return this.layer.getVisible();
@@ -21,5 +22,6 @@ export class LayerToggleComponent {
 
   toggleLayer() {
     this.layer.setVisible(!this.layerVisibility);
+    this.layerVisibilityChanged.emit(this.layerVisibility);
   }
 }

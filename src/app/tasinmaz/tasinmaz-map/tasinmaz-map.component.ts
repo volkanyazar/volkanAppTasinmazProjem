@@ -34,6 +34,7 @@ export class TasinmazMapComponent implements OnInit {
   isMarked = false;
   allowMapMarking: boolean = true;
   allowTakeCoordinate:boolean = true;
+  
 
   constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
   markedTasinmazlar: Feature[] = [];
@@ -100,19 +101,30 @@ this.map.on('click', (event) => {
   this.markTasinmazAtCoordinates(coordinates);
 });
 }
-
+  // Harita katmanlarının görünürlüğünü izlemek için olay ekleyin
+  this.openStreetMapLayer.on('change:visible', () => this.onLayerVisibilityChange());
+  this.googleMapsLayer.on('change:visible', () => this.onLayerVisibilityChange());
   }
-
+  onLayerVisibilityChange() {
+    if (!this.openStreetMapLayer.getVisible() && !this.googleMapsLayer.getVisible()) {
+      // Eğer her iki harita katmanı da görünmezse işaretlemeleri kaldır
+      this.vectorSource.clear();
+    } else if (this.openStreetMapLayer.getVisible() || this.googleMapsLayer.getVisible()) {
+      // Eğer herhangi bir harita katmanı görünürse işaretlemeleri geri getir
+      this.vectorSource.clear();
+      this.vectorSource.addFeatures(this.markedTasinmazlar);
+    }
+  }
   toggleLayer(layer: TileLayer) {
     layer.setVisible(!layer.getVisible());
   }
-
+  
   changeOpacity(layer: TileLayer) {
     const currentOpacity = layer.getOpacity();
     const newOpacity = currentOpacity === 1 ? 0.5 : 1;
     layer.setOpacity(newOpacity);
   }
-
+  
   
   updateMapViewForCoordinates(coorX: number, coorY: number, zoomLevel: number) {
     this.map.getView().setCenter([coorX, coorY]);
