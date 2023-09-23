@@ -234,6 +234,8 @@ export class TasinmazComponent implements OnInit {
               () => {
                 this.tasinmazlar = this.tasinmazlar.filter((item) => item.tasinmazId !== tasinmaz.tasinmazId);
                 this.updatePagedTasinmazlar();
+                this.mapComponent.unmarkTasinmazAtCoordinates(parseFloat(tasinmaz.coorX),parseFloat(tasinmaz.coorY));
+                this.mapComponent.refreshMap();
                 this.alertifyService.success('Taşınmaz Silme İşlemi Başarıyla Gerçekleşti.');
                 console.log(`Taşınmaz ID ${tasinmaz.tasinmazId} başarıyla silindi.`);
               },

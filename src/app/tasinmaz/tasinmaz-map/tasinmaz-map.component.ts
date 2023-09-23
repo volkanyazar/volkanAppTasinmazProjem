@@ -107,9 +107,11 @@ this.map.on('click', (event) => {
   }
   onLayerVisibilityChange() {
     if (!this.openStreetMapLayer.getVisible() && !this.googleMapsLayer.getVisible()) {
+      this.allowMapMarking = false;
       // Eğer her iki harita katmanı da görünmezse işaretlemeleri kaldır
       this.vectorSource.clear();
     } else if (this.openStreetMapLayer.getVisible() || this.googleMapsLayer.getVisible()) {
+      this.allowMapMarking = true;
       // Eğer herhangi bir harita katmanı görünürse işaretlemeleri geri getir
       this.vectorSource.clear();
       this.vectorSource.addFeatures(this.markedTasinmazlar);
@@ -117,6 +119,17 @@ this.map.on('click', (event) => {
   }
   toggleLayer(layer: TileLayer) {
     layer.setVisible(!layer.getVisible());
+  }
+  refreshMap() {
+    const defaultZoom = 6; // Önceki zoom seviyesini burada tanımlayabilirsiniz
+    const defaultCenter = fromLonLat([35, 39]); // Önceki merkez koordinatını burada tanımlayabilirsiniz
+  
+    this.map.getView().setCenter(defaultCenter);
+    this.map.getView().setZoom(defaultZoom);
+  
+    // İşaretlenmiş taşınmazları temizleyin
+    this.vectorSource.clear();
+    this.vectorSource.addFeatures(this.markedTasinmazlar);
   }
   
   changeOpacity(layer: TileLayer) {

@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { Log } from 'src/app/models/log';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { LogService } from 'src/app/services/log.service';
@@ -26,7 +25,6 @@ export class LogDetailComponent implements OnInit {
   constructor(
     private logService: LogService,
     private pageTitleService:PageTitleService,
-    private router: Router,
     private alertifyService: AlertifyService) 
     {
       this.selectedLogs = this.logService.getSelectedLogs();
@@ -39,7 +37,7 @@ export class LogDetailComponent implements OnInit {
       (data) => {
         this.logs = data["data"];
         console.log('Tüm veriler:', this.logs);
-        this.logs.sort((a, b) => a.logid - b.logid);
+        this.logs.sort((a, b) => b.logid - a.logid);
 
         this.updatePagedLogs();
         this.selectedLogs = this.logService.getSelectedLogs();

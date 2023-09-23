@@ -36,7 +36,7 @@ export class LogsComponent implements OnInit {
       (data) => {
         this.logs = data["data"];
         console.log('Tüm veriler:', this.logs);
-        this.logs.sort((a, b) => a.logid - b.logid);
+        this.logs.sort((a, b) => b.logid - a.logid);
 
         this.updatePagedLogs();
       },
