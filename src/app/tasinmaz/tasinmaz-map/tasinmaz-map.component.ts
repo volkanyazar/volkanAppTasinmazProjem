@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/tile';
@@ -34,9 +34,9 @@ export class TasinmazMapComponent implements OnInit {
   isMarked = false;
   allowMapMarking: boolean = true;
   allowTakeCoordinate:boolean = true;
-  
+  coordinateBarVisible: boolean = false;
 
-  constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
+  constructor(private renderer: Renderer2, private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
   markedTasinmazlar: Feature[] = [];
   mouseCoordinates = { x: 0, y: 0 }; 
   ngOnInit() {
@@ -90,7 +90,6 @@ export class TasinmazMapComponent implements OnInit {
       view: view,
       controls: defaultControls().extend([new ScaleLine()])
     });
-
     this.map.on('pointermove', (event) => {
       const coordinates = event.coordinate;
       const [x, y] = coordinates;
@@ -98,6 +97,7 @@ export class TasinmazMapComponent implements OnInit {
       this.mouseCoordinates.x = x;
       this.mouseCoordinates.y = y;
     });
+    
 // Haritaya tıklama olayını ekleyin
 if(this.allowTakeCoordinate){
 this.map.on('click', (event) => {
@@ -114,15 +114,48 @@ this.map.on('click', (event) => {
   this.googleMapsLayer.on('change:visible', () => this.onLayerVisibilityChange());
   }
   onLayerVisibilityChange() {
-    if (!this.openStreetMapLayer.getVisible() && !this.googleMapsLayer.getVisible()) {
+    const isGoogleMapsVisible = this.googleMapsLayer.getVisible();
+    const isOpenStreetMapVisible = this.openStreetMapLayer.getVisible();
+  
+    if (!isOpenStreetMapVisible && !isGoogleMapsVisible) {
+      // Her iki harita katmanı da kapalıysa
       this.allowMapMarking = false;
-      // Eğer her iki harita katmanı da görünmezse işaretlemeleri kaldır
-      this.vectorSource.clear();
-    } else if (this.openStreetMapLayer.getVisible() || this.googleMapsLayer.getVisible()) {
+      this.hideCoordinateBar(); // Koordinat çubuğunu gizle
+      this.vectorSource.clear(); // İşaretlemeleri temizle
+    } else if (isOpenStreetMapVisible || isGoogleMapsVisible) {
+      // Herhangi bir harita katmanı açıksa
       this.allowMapMarking = true;
-      // Eğer herhangi bir harita katmanı görünürse işaretlemeleri geri getir
-      this.vectorSource.clear();
-      this.vectorSource.addFeatures(this.markedTasinmazlar);
+      this.showCoordinateBar(); // Koordinat çubuğunu göster
+      this.vectorSource.clear(); // İşaretlemeleri temizle
+      this.vectorSource.addFeatures(this.markedTasinmazlar); // İşaretlemeleri geri ekle
+    }
+  }
+  
+  showCoordinateBar() {
+    this.coordinateBarVisible = false;
+    this.toggleCoordinateBar();
+  }
+  
+  hideCoordinateBar() {
+    this.coordinateBarVisible = true;
+    this.toggleCoordinateBar();
+  }
+  
+  toggleCoordinateBar() {
+    this.coordinateBarVisible = !this.coordinateBarVisible;
+    const coordinateBar = this.elementRef.nativeElement.querySelector('.coordinate-display');
+    const coordinateScaleLine = this.elementRef.nativeElement.querySelector('.ol-scale-line');
+    const coordinateZoom = this.elementRef.nativeElement.querySelector('.ol-zoom');
+
+
+    if (this.coordinateBarVisible) {
+      this.renderer.setStyle(coordinateBar, 'display', 'block');
+      this.renderer.setStyle(coordinateScaleLine, 'display', 'block');
+      this.renderer.setStyle(coordinateZoom, 'display', 'block');
+    } else {
+      this.renderer.setStyle(coordinateBar, 'display', 'none');
+      this.renderer.setStyle(coordinateScaleLine, 'display', 'none');
+      this.renderer.setStyle(coordinateZoom, 'display', 'none');
     }
   }
   toggleLayer(layer: TileLayer) {
