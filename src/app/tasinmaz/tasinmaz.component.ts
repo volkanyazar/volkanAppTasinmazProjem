@@ -12,6 +12,7 @@ import { Il } from '../models/il';
 import { Ilce } from '../models/ilce';
 import { AuthService } from '../services/auth.service';
 import { TasinmazMapComponent } from './tasinmaz-map/tasinmaz-map.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tasinmaz',
@@ -32,6 +33,7 @@ export class TasinmazComponent implements OnInit {
   mahalleler : Mahalle[] = [];
   iller : Il[] = [];
   ilceler : Ilce[] = [];
+  userId:number;
   tokenUserId = parseInt(this.authService.getIdentity().nameidentifier);
 
   tasinmazForm: FormGroup;
@@ -42,7 +44,8 @@ export class TasinmazComponent implements OnInit {
     private pageTitleService: PageTitleService,
     private router: Router,
     private alertifyService: AlertifyService,
-    private authService:AuthService
+    private authService:AuthService,
+    private userService:UserService
   ) {
     this.selectedTasinmazlar = this.tasinmazService.getSelectedTasinmazlar();
     this.selectedTasinmazlarSpecific = [];
@@ -62,9 +65,17 @@ export class TasinmazComponent implements OnInit {
     this.tasinmazService.getIlceler().subscribe(ilceler=>{
       this.ilceler = ilceler["data"];
     });
-    
-    
-    this.tasinmazService.getTasinmazByUserId(this.tokenUserId).subscribe(
+    this.userService.getUserById(this.tokenUserId).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+      this.loadTasinmazlar();
+    });
+  }
+
+
+  loadTasinmazlar(){
+    this.tasinmazService.getTasinmazByUserId(this.userId).subscribe(
       (data) => {
         this.tasinmazlar = data["data"];
         
@@ -88,7 +99,6 @@ export class TasinmazComponent implements OnInit {
       }
     );
   }
-  
   updateMapViewForSingleSelectedTasinmaz() {
     if (this.selectedTasinmazlar.length === 1) {
       // Sadece bir taşınmaz seçiliyse, bu taşınmazın koordinatlarını alın

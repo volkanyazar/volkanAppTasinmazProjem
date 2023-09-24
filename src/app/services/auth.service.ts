@@ -82,7 +82,7 @@ export class AuthService {
           this.router.navigateByUrl("/tasinmaz");
           this.IsUserLogged = true;
 
-          this.updateUserName(this.getIdentity().name);
+          //this.updateUserName(this.getIdentity().name);
         },
         (error: any) => {
           console.log(error);
