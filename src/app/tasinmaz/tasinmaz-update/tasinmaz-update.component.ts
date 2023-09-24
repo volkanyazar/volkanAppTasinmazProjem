@@ -111,8 +111,9 @@ export class TasinmazUpdateComponent implements OnInit {
     }
     this.tasinmazForm.get('coorX').setValue(x);
     this.tasinmazForm.get('coorY').setValue(y);
-  });
    
+  });
+  this.mapComponent.allowTakeCoordinate = false;
   }
 
  // İl seçimi değiştiğinde
