@@ -74,3 +74,15 @@
   bottom: 10px;
   right: 10px;
 }
+
+.coordinate-display {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(79, 51, 116, 0.3); /* 0.5 opaklık (0'dan 1'e ölçek) */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+}
+

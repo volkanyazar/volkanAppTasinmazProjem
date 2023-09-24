@@ -38,6 +38,7 @@ export class TasinmazMapComponent implements OnInit {
 
   constructor(private elementRef: ElementRef, private tasinmazService: TasinmazService, private coordinateService: CoordinateService) { }
   markedTasinmazlar: Feature[] = [];
+  mouseCoordinates = { x: 0, y: 0 }; 
   ngOnInit() {
     // OpenStreetMap kaynağını oluşturun
     const openStreetMapSource = new OSM();
@@ -90,6 +91,13 @@ export class TasinmazMapComponent implements OnInit {
       controls: defaultControls().extend([new ScaleLine()])
     });
 
+    this.map.on('pointermove', (event) => {
+      const coordinates = event.coordinate;
+      const [x, y] = coordinates;
+      //const coordinateString = toStringXY(coordinates, 2);
+      this.mouseCoordinates.x = x;
+      this.mouseCoordinates.y = y;
+    });
 // Haritaya tıklama olayını ekleyin
 if(this.allowTakeCoordinate){
 this.map.on('click', (event) => {
