@@ -21,8 +21,8 @@ export class LogdetailsFilterPipe implements PipeTransform {
         (log.tarih && log.tarih.toLowerCase().includes(searchText)) ||
         (log.logip && log.logip.toLowerCase().includes(searchText)) ||
         (log.aciklama && log.aciklama.toLowerCase().includes(searchText)) ||
-        ((log.durum === true && 'aktif'.includes(searchText)) ||
-        (log.durum === false && 'pasif'.includes(searchText))) 
+        ((log.durum === true && 'başarılı'.includes(searchText)) ||
+        (log.durum === false && 'başarısız'.includes(searchText))) 
       ) {
         return true;
       }

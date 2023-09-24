@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertifyService } from '../services/alertify.service';
 import { UserService } from '../services/user.service';
 import { UserReportService } from '../services/user-report.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -22,11 +23,14 @@ export class UsersComponent implements OnInit {
   pageSize = 10;
   pagedUsers: User[];
   searchText: string = '';
+  tokenUserId = parseInt(this.authService.getIdentity().nameidentifier);
+  userId:number;
 
   userForm: FormGroup;
 
   constructor(
     private userService: UserService,
+    private authService:AuthService,
     private userReportService: UserReportService,
     private pageTitleService:PageTitleService,
     private router: Router,
@@ -39,6 +43,16 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.pageTitleService.setPageTitle('Kullanıcı İşlemleri');
+    this.userService.getUserById(this.tokenUserId).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+      this.loadUsers();
+    });
+
+  }
+
+  loadUsers(){
     this.userService.getAll().subscribe(
       (data) => {
         this.users = data;
@@ -54,7 +68,6 @@ export class UsersComponent implements OnInit {
       }
     );
   }
-
   navigateToAddUser() {
     this.router.navigateByUrl('/kullanici-islemleri/user-add');
   }

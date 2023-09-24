@@ -4,6 +4,8 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { LogService } from 'src/app/services/log.service';
 import * as XLSX from 'xlsx';
 import { PageTitleService } from 'src/app/services/page-title.service';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-log-detail',
@@ -19,13 +21,18 @@ export class LogDetailComponent implements OnInit {
   pageSize = 10;
   pagedLogs: Log[];
   searchText: string = '';
+  tokenUserId = parseInt(this.authService.getIdentity().nameidentifier);
+  userId:number;
 
   @ViewChild('printSection') printSection: ElementRef;
 
   constructor(
     private logService: LogService,
     private pageTitleService:PageTitleService,
-    private alertifyService: AlertifyService) 
+    private alertifyService: AlertifyService,
+    private userService:UserService,
+    private authService:AuthService
+    ) 
     {
       this.selectedLogs = this.logService.getSelectedLogs();
       this.selectedLogsSpecific = [];
@@ -33,6 +40,15 @@ export class LogDetailComponent implements OnInit {
 
   ngOnInit() {
     this.pageTitleService.setPageTitle('Log Detayları');
+    this.userService.getUserById(this.tokenUserId).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+      this.loadLogs();
+    });
+  }
+
+  loadLogs(){
     this.logService.getAll().subscribe(
       (data) => {
         this.logs = data["data"];
@@ -48,16 +64,14 @@ export class LogDetailComponent implements OnInit {
       }
     );
   }
-
-
   search() {
     if (this.searchText.trim() === '') {
       this.pagedLogs = this.logs.slice(0, this.itemsPerPage);
     } else {
       const filteredLogs = this.logs.filter((log) => {
         return (
-          ((log.durum === true && 'aktif'.includes(this.searchText)) || 
-          (log.durum === false && 'pasif'.includes(this.searchText))) ||
+          ((log.durum === true && 'başarılı'.includes(this.searchText)) || 
+          (log.durum === false && 'başarısız'.includes(this.searchText))) ||
           (log.userid && log.userid.toString().includes(this.searchText.toLowerCase())) || 
           (log.islemtipi && log.islemtipi.toLowerCase().includes(this.searchText.toLowerCase())) ||
           (log.tarih && log.tarih.toLowerCase().includes(this.searchText.toLowerCase())) ||
@@ -81,7 +95,7 @@ export class LogDetailComponent implements OnInit {
   }
   
   setUserStatus(durum: boolean): string {
-    return durum ==false?'Pasif':'Aktif';
+    return durum ==false?'Başarısız':'Başarılı';
   }
   onCheckboxClicked(event: any, log: Log) {
     if (event.target.checked) {
