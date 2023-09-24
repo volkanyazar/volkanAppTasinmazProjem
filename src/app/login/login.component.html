@@ -9,7 +9,7 @@
               <form [formGroup]="loginForm" (ngSubmit)="login()" class="mx-3 my-3">
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input id="email" formControlName="email" class="mt-2 form-control" required>
+                  <input id="email" formControlName="email" class="mt-2 form-control" required autocomplete="email">
                   <div *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').dirty" class="text-danger">
                     Email alanı boş bırakılamaz.
                   </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="password" class="form-label">Parola</label>
-                  <input type="password" formControlName="password" class="mt-2 form-control" required>
+                  <input type="password" formControlName="password" class="mt-2 form-control" required autocomplete="current-password">
                   <div *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').dirty" class="text-danger">
                     Parola alanı boş bırakılamaz.
                   </div>
