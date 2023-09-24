@@ -24,6 +24,7 @@ export class TasinmazAddComponent implements OnInit {
   ilceler: any[] = [];
   mahalleler: any[] = [];
   user = {};
+  userId:number;
   tokenUserId = this.authService.getIdentity().nameidentifier;
 
   constructor(
@@ -68,6 +69,11 @@ onIlceChange() {
 
   ngOnInit() {
     this.pageTitleService.setPageTitle('Yeni Taşınmaz Ekle');
+    this.userService.getUserById(parseInt(this.tokenUserId)).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+    });
     this.tasinmazService.getIller().subscribe(iller =>{
       this.iller = iller["data"];
     });

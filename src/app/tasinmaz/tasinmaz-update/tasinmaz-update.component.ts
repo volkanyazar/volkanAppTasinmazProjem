@@ -8,6 +8,7 @@ import { CoordinateService } from 'src/app/services/coordinate-service.service';
 import { PageTitleService } from 'src/app/services/page-title.service';
 import { TasinmazService } from 'src/app/services/tasinmaz.service';
 import { TasinmazMapComponent } from '../tasinmaz-map/tasinmaz-map.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-tasinmaz-update',
@@ -24,7 +25,7 @@ export class TasinmazUpdateComponent implements OnInit {
   ilceler: any[] = [];
   mahalleler: any[] = [];
   tokenUserId = this.authService.getIdentity().nameidentifier;
-
+  userId:number;
 
   constructor(
     private pageTitleService: PageTitleService,
@@ -34,6 +35,7 @@ export class TasinmazUpdateComponent implements OnInit {
     private tasinmazService: TasinmazService,
     private alertifyService: AlertifyService,
     private authService:AuthService,
+    private userService:UserService,
     private coordinateService:CoordinateService
   ) {
 
@@ -54,7 +56,11 @@ export class TasinmazUpdateComponent implements OnInit {
     
   ngOnInit() {
     this.pageTitleService.setPageTitle('Taşınmaz Güncelle');
-
+    this.userService.getUserById(parseInt(this.tokenUserId)).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+    });
     this.route.queryParams.subscribe(params => {
       const tasinmazId = +params['id'];
       

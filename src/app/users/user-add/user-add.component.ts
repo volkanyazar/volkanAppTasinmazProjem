@@ -17,6 +17,8 @@ import { UserService } from 'src/app/services/user.service';
 export class UserAddComponent implements OnInit {
   userForm: FormGroup;
   newUser: User = new User();
+  tokenUserId = parseInt(this.authService.getIdentity().nameidentifier);
+  userId:number;
   
   constructor(
     private pageTitleService: PageTitleService,
@@ -29,6 +31,11 @@ export class UserAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.pageTitleService.setPageTitle('Yeni Kullanıcı Ekle');
+    this.userService.getUserById(this.tokenUserId).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+    });
     this.createUserForm();
   }
 

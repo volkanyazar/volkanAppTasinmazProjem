@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { HashingHelperService } from 'src/app/services/hashing-helper.service';
 import { PageTitleService } from 'src/app/services/page-title.service';
 import { UserService } from 'src/app/services/user.service';
@@ -17,6 +18,8 @@ export class UserUpdateComponent implements OnInit {
   userForm: FormGroup;
   updatedUser: User = new User();
   selectedUsers: User[] = [];
+  tokenUserId = parseInt(this.authService.getIdentity().nameidentifier);
+  userId:number;
 
   constructor(
     private pageTitleService: PageTitleService,
@@ -24,7 +27,8 @@ export class UserUpdateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private alertifyService: AlertifyService
+    private alertifyService: AlertifyService,
+    private authService:AuthService
   ) {
 
     this.userForm = this.formBuilder.group({
@@ -40,7 +44,11 @@ export class UserUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.pageTitleService.setPageTitle('Kullanıcı Bilgilerini Güncelle');
-
+    this.userService.getUserById(this.tokenUserId).subscribe((user) => {
+      this.userId = user["data"].userId;
+      this.authService.updateUserName(user["data"].firstName+" "+user["data"].lastName)
+      console.log(this.userId);
+    });
     this.route.queryParams.subscribe(params => {
       const userId = +params['id'];
       
