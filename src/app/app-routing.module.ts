@@ -29,9 +29,9 @@ const routes: Routes = [
       { path: 'kullanici-islemleri/user-update', component: UserUpdateComponent, canActivate:[AdminGuard] },
       { path: 'log-islemleri/logdetails', component: LogDetailComponent, canActivate:[AdminGuard] },
       { path: 'log-islemleri', component: LogsComponent, canActivate:[AdminGuard] },
+      { path: 'err', component: NotFoundComponent }
     ],
   },
-  { path: 'err', component: NotFoundComponent },
   { path: '**', redirectTo: '/err' }
   
 ];
