@@ -190,6 +190,7 @@ export class AuthService {
   isTokenExpired(): boolean {
     const token = this.token;
     if (token) {
+      console.log(this.jwtHelper.isTokenExpired(token));
       return this.jwtHelper.isTokenExpired(token);
     }
     return true; // Token doesn't exist or is expired
