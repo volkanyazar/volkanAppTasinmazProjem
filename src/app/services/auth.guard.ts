@@ -17,6 +17,10 @@ export class AuthGuard implements CanActivate {
       const isAccessTokenExpired = this.authService.isTokenExpired();
       if (!isAccessTokenExpired) {
         return true;
+      }else{
+        // Token süresi dolduğunda, kullanıcıyı oturumu kapat ve giriş sayfasına yönlendir
+        this.authService.logoutForGuard();
+        return false;
       }
     } else {
       this.router.navigateByUrl("auth/login"); 

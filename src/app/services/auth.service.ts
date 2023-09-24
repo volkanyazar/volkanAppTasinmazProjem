@@ -160,6 +160,11 @@ export class AuthService {
       }
     );
   }
+  logoutForGuard(){
+    localStorage.removeItem(this.TOKEN_KEY);
+    this.router.navigateByUrl("auth/login"); 
+    this.IsUserLogged = false;
+  }
 
 
   loggedIn(): boolean {
